@@ -1,0 +1,41 @@
+{% set normal_input_attr = { 'attr': { 'class': 'form-control input-box form-ensurance-header-control', 'required': 'required'} } %}
+{{ form_start(form, {'attr': {'class': 'mb-3', 'novalidate': 'novalidate', 'id': 'sosForm'}}) }}
+    <div class="form-floating mb-3">
+        {{ form_widget(form.nbrPersonnes, normal_input_attr|merge({'id': 'floatingNbrPers'})) }}
+        {{ form_label(form.nbrPersonnes, "Nombre de personnes", {'label_attr': {'for': form.nbrPersonnes.vars.id}}) }}
+        {{ form_errors(form.nbrPersonnes) }}
+    </div>
+    {# Hidden inputs for latitude and longitude #}
+    <input type="hidden" id="form_latitude" name="latitude">
+    <input type="hidden" id="form_longitude" name="longitude">
+
+    <div class="col-12 d-grid">
+        <button type="submit" class="btn btn-primary rounded-pill" id="sosButton">Save</button>
+    </div>
+{{ form_end(form) }}
+
+<script>
+    document.getElementById('sosButton').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        if (!navigator.geolocation) {
+            alert("Geolocation is not supported by this browser.");
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Set latitude and longitude values to the hidden form fields
+            document.getElementById('form_latitude').value = latitude;
+            document.getElementById('form_longitude').value = longitude;
+
+            // Submit the form
+            document.getElementById('sosForm').submit();
+        }, function(error) {
+            console.error('Error getting current location:', error);
+            alert("Error getting current location. Please try again later.");
+        });
+    });
+</script>

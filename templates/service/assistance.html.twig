@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Call us<a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+            <ul class="navbar-nav ms-auto border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('index') }}">Home</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('offres') }}">Our offers</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('ajouter_un_bien') }}">My goods</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('services') }}">Fast services</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('about') }}">About us</a></li>
+              <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="{{ path('assistance') }}">Assitance</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('community') }}">Community</a></li>
+              {% if (app.session.get('user_role') != "Client") %}
+              <li class="nav-item px-0"><a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a></li>
+              {% endif %}
+            </ul>
+            <div class="d-flex mt-2 align-items-center mt-lg-0">
+              <div class="dropdown">
+                <button class="btn btn-sm d-flex mx-2" id="dropdownMenuButton1" type="submit" data-bs-toggle="dropdown" aria-expanded="false"><img style="border-radius: 50%; width: 30px; height: 30px;" src="{{ asset('uploads/' ~ app.session.get('user_image')|default('images/faces/face28.jpg')) }}" alt="profile"/></button>
+                <div class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end p-0 rounded" aria-labelledby="dropdownMenuButton1" style="top:55px">
+                  <p class="mb-0 ms-auto text-light fs-0 fw-normal text-center">{{app.session.get('user_name')}}</p>
+                  <a class="dropdown-item" href="{{ path('profile',{'id': app.session.get('user_id')}) }}"><i class="fas fa-user-edit text-primary" style="color: black;"></i>   My profile</a>
+                  <a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt text-danger"></i>    Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+{% endblock %}
+
+{% block body %}
+        <section id="products">
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-car-insurance.png);background-position:0 200px;background-size:100% 45%;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-left.png);background-position:left;background-size:15% 70%;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container-lg">
+          <div class="row flex-center py-8 py-md-10">
+            <div class="col-12 mt-6">
+              <div class="d-flex align-items-start">
+                <div class="nav flex-column nav-tab" id="nav-tab" role="tablist" aria-orientation="vertical"><a class="circle-hover-wrapper nav-link mb-lg-4 active" id="nav-car-tab" href="#!" data-bs-toggle="tab" data-bs-target="#nav-car" role="tab" aria-controls="nav-car" aria-selected="true">
+                   {# reclamation #}
+                    <div class="icon-box"><img class="car-insurance-icon" src="{{ asset('assets/img/icons/rec.png') }}" alt="..." /><img class="car-insurance-icon car-insurance-icon-hover" src="{{ asset('assets/img/icons/rec-hover.png') }}" alt="..." /></div>
+                  </a><a class="circle-hover-wrapper nav-link mb-lg-4" id="nav-home-tab" href="#!" data-bs-toggle="tab" data-bs-target="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">
+                    <div class="icon-box"><img class="car-insurance-icon" src="{{ asset('assets/img/icons/rdv.png') }}" alt="..." /><img class="car-insurance-icon car-insurance-icon-hover" src="{{ asset('assets/img/icons/rdv-hover.png') }}" alt="..." /></div>
+                  </a></div>
+                <div class="tab-content w-100" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="nav-car" role="tabpanel" aria-labelledby="nav-car-tab">
+                    <div class="row align-items-center offset-sm-1 g-3">
+                      <div class="col-md-6 col-xl-4 order-1 order-md-0">
+                        <h3 class="text-light mb-md-5">ASSURANCY Assistance</h3>
+                        <p class="text-400">In case of emergency, at your service 24/7.</p>
+                       
+                       
+<a class="btn btn-primary btn-ensurance mt-5" href="{{ path('app_reclamation_new') }}">
+    <span class="fas fa-chevron-right fa-xs btn-icon"></span>
+    <span class="btn-text">New réclamation</span>
+</a>
+                       
+                       {% block dhia %}
+                      
+                      {% endblock %}
+                      </div>
+                      <div class="col-md-6 col-xl-8 text-end">
+                        <div class="img-shape"><img class="feature-img" src="{{ asset('assets/img/gallery/reclamation.png') }}" alt="..." /></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="row align-items-center offset-sm-1 g-3">
+                      <div class="col-md-6 col-xl-4 order-1 order-md-0">
+                        <h3 class="text-light mb-md-5">Assistance services</h3>
+                        <p class="text-400">ASSURANCY is here to support and assist you when you need it most.</p>
+                    
+                       <a class="btn btn-primary btn-ensurance mt-5" href="{{ path('app_r_d_v_new') }}">
+    <span class="fas fa-chevron-right btn-icon" style="font-size: larger;"></span>
+    <span class="btn-text">New rendez-vous</span>
+</a>
+
+                       
+                      </div>
+                      <div class="col-md-6 col-xl-8 text-end">
+                        <div class="img-shape"><img class="feature-img" src="{{ asset('assets/img/gallery/rdv.png') }}" alt="..." /></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock %}

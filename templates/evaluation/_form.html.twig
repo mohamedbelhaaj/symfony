@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+{% set normal_input_attr = { 'attr': { 'class': 'form-control form-control-lg', 'required': 'required'} } %}
+{{ form_start(form, {'attr': {'class': 'pt-3', 'novalidate' : 'novalidate'}}) }}
+    <div class="form-group">
+        {{ form_label(form.valeurneuf,"Valeur neuf", {'label_attr': {'for': form.valeurneuf.vars.id}}) }}
+        {{ form_widget(form.valeurneuf,normal_input_attr|merge({'id': 'floatingVN', 'placeholder': 'Valeur neuf'})) }}
+        {{ form_errors(form.valeurneuf) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.valeurvenal,"Valeur venal", {'label_attr': {'for': form.valeurvenal.vars.id}}) }}
+        {{ form_widget(form.valeurvenal,normal_input_attr|merge({'id': 'floatingVV', 'placeholder': 'Valeur venal'})) }}
+        {{ form_errors(form.valeurvenal) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.observation,"Observation", {'label_attr': {'for': form.observation.vars.id}}) }}
+        {{ form_widget(form.observation,normal_input_attr|merge({'id': 'floatingOb', 'placeholder': 'Observation'})) }}
+        {{ form_errors(form.observation) }}
+    </div>
+    <div class="mt-3">
+    <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" id="submit-btn" onclick="return validateForm();">{{ button_label|default("Save") }}</button>
+    </div>
+{{ form_end(form) }}

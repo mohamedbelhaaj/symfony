@@ -1,0 +1,180 @@
+{% extends 'basedash.html.twig' %}
+
+
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">Welcome {{ app.session.get('user_name') }}</h3>
+                  <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card tale-bg">
+                <div class="card-people mt-auto">
+                  <img src="{{ asset('images/dashboard/people.svg') }}" alt="people">
+                  <div class="weather-info">
+                    <div class="d-flex">
+                      <div>
+                        <h2 class="mb-0 font-weight-normal"><i class="icon-time mr-2"></i>{{ "now"|date("l, Y-m-d (H:m) ") }}</h2>
+                      </div>
+                      <div class="ml-2">
+                        <h4 class="location font-weight-normal">{{geoLocationData.city}}</h4>
+                        <h6 class="font-weight-normal">{{geoLocationData.country}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin transparent">
+              <div class="row">
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-tale">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Clients</p>
+                      <p class="fs-30 mb-2">{{NBClients}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-dark-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Number of SOS agents</p>
+                      <p class="fs-30 mb-2">{{NBSOS}}</p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                  <div class="card card-light-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Experts</p>
+                      <p class="fs-30 mb-2">{{NBExperts}}</p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 stretch-card transparent">
+                  <div class="card card-light-danger">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Ensurances</p>
+                      <p class="fs-30 mb-2">{{NBEnsurances}}</p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Ensurances Details</p>
+                  <p class="font-weight-500">The total number of policies within the selected insurance categories. This represents the extent of coverage provided in specific areas such as vehicles, real estate properties, and life situations.</p>
+                  <canvas id="EnsurancesChart"
+                  data-custom-labels="{{ LabelsE | json_encode | e('html_attr') }}"
+                  data-custom-data="{{ DataE | json_encode | e('html_attr') }}"></canvas>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <script src="{{ asset('js/customChart1.js') }}"></script>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                 <div class="d-flex justify-content-between">
+                  <p class="card-title">Rating on demands</p>
+                 </div>
+                  <p class="font-weight-500">The doughnut chart illustrates the total number of SOS ratings on demand. Each segment represents a distinct category of ratings, offering insight into user engagement with our SOS feature.</p>
+                  <canvas id="SOSChart"
+                  data-custom-labels="{{ LabelsR | json_encode | e('html_attr') }}"
+                  data-custom-data="{{ DataR | json_encode | e('html_attr') }}"></canvas>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <script src="{{ asset('js/customChart2.js') }}"></script>
+                  </div>
+              </div>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+
+        

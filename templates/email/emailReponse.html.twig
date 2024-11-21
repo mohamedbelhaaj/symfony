@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Assurancy.tn</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        h1 {
+            background-color: #086c0c;
+            color: #ffffff;
+            padding: 30px 0 30px 0;
+            font-weight: normal;
+        }
+        hr {
+            border: none;
+            border-top: 3px solid #086c0c;
+            margin: 20px;
+        }
+        .container {
+            background-color: #fefefe;
+            width: 580px;
+            margin: 0 auto;
+        }
+        .bottom {
+            background-color: #efefee;
+        }
+        .block {
+            margin: 0;
+            padding: 10px 20px 20px 20px;
+        }
+        .logo {
+            width: 50%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #086c0c;
+            color: #fefefe;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="container">
+        <div class="header text-center">
+            <a href="">
+                <img src="https://i.imgur.com/MaLlwBR.png" class="logo" alt="SpaceBar Logo">
+            </a>
+        </div>
+        <div class="content">
+            <h1 class="text-center">Respond to complaint n°{{recid}}</h1>
+            <p class="block">Hi , {{ Username }}</p>
+            <p class="block">
+                {{reponse}}
+            </p>
+        <div class="footer">
+            <p class='block'>
+                Best Regards,<br><br>
+                The <em>Assurancy.tn</em> Team
+            </p>
+            <p class="block bottom text-center">
+                Contact us : +216 92440011
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

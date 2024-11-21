@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Appelez-nous  <a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+            <ul class="navbar-nav ms-auto border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('index') }}">Accueil</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('offres') }}">Nos offres</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('ajouter_un_bien') }}">Ajouter un bien</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('services') }}">Services rapides</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('about') }}">À propos nous</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('assistance') }}">Assitance</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('community') }}">Communauté</a></li>
+            </ul>
+            <div class="d-flex mt-2 align-items-center mt-lg-0">
+              <a href="{{ path('login') }}"> <i class="fas fa-user text-primary"> </i></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+{% endblock %}
+
+{% block body %}
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-car-insurance.png);background-position:left top;background-size:100% 85%;"></div>
+        <div class="container">
+          <div class="row-cols-2 d-flex align-items-center justify-content-center">
+            <div class="card card-bg shadow hero-header-form">
+                <div class="card-body p-4 p-xl-6">
+                    <h1 class="display-2 text-light fw-thin text-center">Editer un immobilier</h1>
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+
+    <div class="form-floating mb-3">
+        {{ form_widget(form.id_fiscal , {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': 'surname'}}) }}
+        {{ form_label(form.id_fiscal , 'id fiscale') }}
+    </div>
+
+    <div class="form-floating mb-3">
+        {{ form_widget(form.adresse, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': 'name'}}) }}
+        {{ form_label(form.adresse, 'adresse') }}
+    </div>
+
+    <div class="form-floating mb-3">
+        {{ form_widget(form.type, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': 'date'}}) }}
+        {{ form_label(form.type, 'type') }}
+    </div>
+
+    <div class="form-floating mb-3">
+        {{ form_widget(form.superficie, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': 'address'}}) }}
+        {{ form_label(form.superficie, 'Superficie') }}
+    </div>
+
+   
+
+    <div class="form-floating mb-3">
+        {{ form_widget(form.titre_prop, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': 'tel'}}) }}
+        {{ form_label(form.titre_prop, 'titre prop') }}
+    </div>
+
+   
+    
+
+    <div class="col-12 d-grid">
+        <button class="btn btn-primary rounded-pill" type="submit">Enregistrer</button>
+    </div>
+
+    {{ form_end(form) }}
+
+                </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

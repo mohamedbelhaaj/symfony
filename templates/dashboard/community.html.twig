@@ -1,0 +1,125 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Communauté{% endblock %}
+
+{% block body %}
+    <!-- partial -->
+    <!-- partial:partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    <!-- partial -->
+    <div class="main-panel">
+        <div class="content-wrapper">
+              <div class="row">
+                <div class="col-md-7 offset-2 stretch-card transparent">
+                  <div class="card card-tale">
+                    <div class="card-body">
+                      <p class="fs-30 mb-2">Best post is Post N°{{BestPost.id}}</p>
+                      <p class="mb-2">Has {{BestPost.likeCount}} likes and {{BestPost.commentCount}} comments</p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Publications</p>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="display expandable-table" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Titre</th>
+                                                    <th>Date de création</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for publication in publications %}
+                                                <tr>
+                                                    <td>{{ publication.id }}</td>
+                                                    <td>{{ publication.titre }}</td>
+                                                    <td>{{ publication.date ? publication.date|date('Y-m-d') : '' }}</td>
+                                                    <td>
+                                                    <a href="{{ path('app_publication_showA', {'id': publication.id}) }}"><i class="ti-eye" href="#"></i></a>
+                                                    <a href="{{ path('app_publication_deleteA', {'id': publication.id}) }}"><i class="ti-trash" href="#"></i></a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

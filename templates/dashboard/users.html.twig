@@ -1,0 +1,172 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Utilisateurs{% endblock %}
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-8 offset-2 grid-margin transparent">
+              <div class="row">
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-tale">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Clients</p>
+                      <p class="fs-30 mb-2">{{NBClients}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-dark-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Number of SOS agents</p>
+                      <p class="fs-30 mb-2">{{NBSOS}}</p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                  <div class="card card-light-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Experts</p>
+                      <p class="fs-30 mb-2">{{NBExperts}}</p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 stretch-card transparent">
+                  <div class="card card-light-danger">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Ensurances</p>
+                      <p class="fs-30 mb-2">{{NBEnsurances}}</p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <button type="button" class="btn btn-primary" onclick="window.location='{{ path('app_utilisateur_new') }}'"><i class="ti-plus"></i>  Create new user</button>
+                  <p class="card-title my-2">Users</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Name</th>
+                              <th>E-mail</th>
+                              <th>Address</th>
+                              <th>Phone</th>
+                              <th>Birthday</th>
+                              <th>Role</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for utilisateur in utilisateurs %}
+                            <tr>
+                              <td scope="row">{{ utilisateur.id }}</td>
+                              <td scope="row">{{ utilisateur.prenom }} {{ utilisateur.nom }}</td>
+                              <td scope="row">{{ utilisateur.email }}</td>
+                              <td scope="row">{{ utilisateur.adresse }}</td>
+                              <td scope="row">{{ utilisateur.tel }}</td>
+                              <td scope="row">{{ utilisateur.dateN ? utilisateur.dateN|date('d-m-Y') : '' }}</td>
+                              <td scope="row">{{ utilisateur.role }}</td>
+                              <td scope="row">{{ utilisateur.status }}</td>
+                              <td scope="row">
+                                <a href="{{ path('app_utilisateur_show',{'id': utilisateur.id}) }}"><i class="ti-eye" href=""></i></a>
+                                <a href="{{ path('app_utilisateur_edit',{'id': utilisateur.id}) }}"><i class="ti-pencil" href="#"></i></a>
+                                {% if utilisateur.status == "Non vérifié" %}
+                                <a href="{{ path('app_utilisateur_verify',{'id': utilisateur.id}) }}"><i class="ti-check" href=""></i></a>
+                                {% else %}
+                                <a href="{{ path('app_utilisateur_verify',{'id': utilisateur.id}) }}"><i class="ti-close" href=""></i></a>
+                                {% endif %}
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endblock %}

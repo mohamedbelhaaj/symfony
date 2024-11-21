@@ -1,0 +1,314 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Call us<a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+            <ul class="navbar-nav ms-auto border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('index') }}">Home</a></li>
+              <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="{{ path('offres') }}">Our offers</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('ajouter_un_bien') }}">My goods</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('services') }}">Fast services</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('about') }}">About us</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('assistance') }}">Assitance</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('community') }}">Community</a></li>
+              {% if (app.session.get('user_role') != "Client") %}
+              <li class="nav-item px-0"><a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a></li>
+              {% endif %}
+            </ul>
+            <div class="d-flex mt-2 align-items-center mt-lg-0">
+              <div class="dropdown">
+                <button class="btn btn-sm d-flex mx-2" id="dropdownMenuButton1" type="submit" data-bs-toggle="dropdown" aria-expanded="false"><img style="border-radius: 50%; width: 30px; height: 30px;" src="{{ asset(app.session.get('user_image')|default('images/faces/face28.jpg')) }}" alt="profile"/></button>
+                <div class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end p-0 rounded" aria-labelledby="dropdownMenuButton1" style="top:55px">
+                  <p class="mb-0 ms-auto text-light fs-0 fw-normal text-center">{{app.session.get('user_name')}}</p>
+                  <a class="dropdown-item" href="{{ path('profile',{'id': app.session.get('user_id')}) }}"><i class="fas fa-user-edit text-primary" style="color: black;"></i>   My profile</a>
+                  <a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt text-danger"></i>    Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+{% endblock %}
+
+{% block body %}
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-car-insurance.png);background-position:left top;background-size:100% 85%;"></div>
+        <div class="container">
+          <div class="row align-items-center min-vh-100">
+           {# <div class="col-md-6 col-xl-6 pe-xxl-0">
+              <img src="{{ asset('images/imgcar3.jpg') }}" style="position: relative; top: 70px;border-radius: 2rem;  opacity:0.4" alt="">
+          </div> #}
+           <div class="col-md-6 col-xl-6 pe-xxl-0">
+            <div class="card card-bg shadow hero-header-form">
+                <div class="card-body p-4 p-xl-6">
+                    <h2 class="display-2 text-light fw-thin text-center">Ajout Constat</h2>
+
+                {{ form_start(form, {'attr': {'class': 'mb-3', 'novalidate': 'novalidate'}}) }}
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.veha_permis, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.veha_permis, "Numéro de permis du conducteur du véhicule A : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.veha_permis) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.veha_venant, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.veha_venant, "Lieu d'origine du véhicule A : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.veha_venant) }}
+                       </div>
+                    </div>
+
+                    
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.veha_allant, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.veha_allant, "Lieu de destination du véhicule A : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.veha_allant) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                      {{ form_label(form.veha_datepermis, "Date de délivrance du permis du conducteur du véhicule A") }}<br><br>
+                       {{ form_widget(form.veha_datepermis, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.veha_datepermis) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_assurance, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_assurance, "Compagnie d'assurance du conducteur du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_assurance) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_police, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_police, "Numéro de police d'assurance du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_police) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_agence, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_agence, "Agence d'assurance du conducteur du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_agence) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                    {{ form_label(form.vehb_attestationVDD, "Date de validité de l'attestation d'assurance du véhicule B : ") }}<br>
+                       {{ form_widget(form.vehb_attestationVDD, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}                       
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_attestationVDD) }}
+                       </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                       {{ form_label(form.vehb_attestationVDF, "Date de fin de validité de l'attestation d'assurance du véhicule B : ") }}<br><br>
+                       {{ form_widget(form.vehb_attestationVDF, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }} 
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_attestationVDF) }}
+                       </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_c_nom, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_c_nom, "Nom du témoin côté B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_c_nom) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_c_prenom, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_c_prenom, "Prénom du témoin côté B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_c_prenom) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_c_adresse, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_c_adresse, "Adresse du témoin côté B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_c_adresse) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_c_permis, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_c_permis, "Numéro de permis du témoin côté B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_c_permis) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                    {{ form_label(form.vehb_c_datepermis, "Date de délivrance du permis du témoin côté B : ") }}<br>
+                       {{ form_widget(form.vehb_c_datepermis, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_c_datepermis) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_a_nom, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_a_nom, "Nom du témoin côté A : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_a_nom) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_a_prenom, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_a_prenom, "Prénom du témoin côté A : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_a_prenom) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_a_adresse, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_a_adresse, "Adresse du témoin côté A : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_a_adresse) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_a_tel, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_a_tel, "Numéro de téléphone du témoin côté A : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_a_tel) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_marque, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_marque, "Marque du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_marque) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_type, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_type, "Type du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_type) }}
+                       </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_matricule, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_matricule, "Matricule du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_matricule) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_venant, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_venant, "Lieu d'origine du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_venant) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_allant, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_allant, "Lieu de destination du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_allant) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.veha_circomstances, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.veha_circomstances, "Circonstances de l'accident côté A : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.veha_circomstances) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.vehb_circomstances, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.vehb_circomstances, "Circonstances de l'accident côté B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.vehb_circomstances) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                      {# {{ form_widget(form.photo_accident) }} #}
+                      {{ form_label(form.photo_accident_file, "Photo de l'accident : ") }} <br><br><br>
+                       {{ form_widget(form.photo_accident_file) }} <br><br>
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.photo_accident_file) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                      {# {{ form_widget(form.photo_veha) }} #}
+                      {{ form_label(form.photo_veha_file, "Photo du véhicule A : ") }} <br><br><br>
+                       {{ form_widget(form.photo_veha_file) }} <br><br>
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.photo_veha_file) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                      {# {{ form_widget(form.photo_vehb) }} #}
+                      {{ form_label(form.photo_vehb_file, "Photo du véhicule B : ") }} <br><br><br>
+                       {{ form_widget(form.photo_vehb_file) }} <br><br>
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.photo_vehb_file) }}
+                       </div>
+                    </div>
+
+
+                    {# <div class="form-floating mb-3">
+                       {{ form_widget(form.photo_vehb, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.photo_vehb, "Photo du véhicule B : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.photo_vehb) }}
+                       </div>
+                    </div> #}
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.blesses) }}
+                       {{ form_label(form.blesses, "Indicateur de la présence de blessés : ") }}
+                       <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.blesses) }}
+                       </div>
+                    </div>
+                    <br><br>
+
+
+
+
+                    <div class="col-12 d-grid">
+                        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary rounded-pill', 'type': 'submit'}}) }}
+                    </div>
+
+                {{ form_end(form) }}
+
+
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

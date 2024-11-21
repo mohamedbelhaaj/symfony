@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>{% block title %}Assurancy.tn {% endblock %}</title>
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    {% block favico %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/icons/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/icons/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/icons/icon.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/icons/icon.png') }}">
+    <link rel="manifest" href="{{ asset('assets/img/favicons/manifest.json') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('assets/img/icons/icon.png') }}">
+    <meta name="theme-color" content="#ffffff">
+    {% endblock %}
+
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    {% block css %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="{{ asset('vendors/prism/prism.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/theme.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/user.css') }}" rel="stylesheet" />
+    {% endblock %}
+
+  </head>
+
+
+  <body>
+
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+    {% block nav %}
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Call us<a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+            <ul class="navbar-nav ms-auto border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="{{ path('index') }}">Home</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('offres') }}">Our offers</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('ajouter_un_bien') }}">My goods</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('services') }}">Fast services</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('about') }}">About us</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('assistance') }}">Assitance</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('community') }}">Community</a></li>
+              {% if (app.session.get('user_role') != "Client") %}
+              <li class="nav-item px-0"><a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a></li>
+              {% endif %}
+            </ul>
+            <div class="d-flex mt-2 align-items-center mt-lg-0">
+              <div class="dropdown">
+                <button class="btn btn-sm d-flex mx-2" id="dropdownMenuButton1" type="submit" data-bs-toggle="dropdown" aria-expanded="false"><img style="border-radius: 50%; width: 30px; height: 30px;" src="{{ asset('uploads/' ~ app.session.get('user_image')|default('images/faces/face28.jpg')) }}" alt="profile"/></button>
+                <div class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end p-0 rounded" aria-labelledby="dropdownMenuButton1" style="top:55px">
+                  <p class="mb-0 ms-auto text-light fs-0 fw-normal text-center">{{app.session.get('user_name')}}</p>
+                  <a class="dropdown-item" href="{{ path('profile',{'id': app.session.get('user_id')}) }}"><i class="fas fa-user-edit text-primary" style="color: black;"></i>   My profile</a>
+                  <a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt text-danger"></i>    Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      {% endblock %}
+      <section class="py-0">
+        {% block body %}
+        <div class="bg-holder" style="background-image:url(assets/img/illustrations/bg.png);background-position:left center;background-size:auto 816px;">
+        </div>
+        <div class="container">
+          <div class="row align-items-center min-vh-100">
+            <div class="col-md-7 col-xl-7 pt-9 text-md-start text-center">
+              <h1 class="display-2 text-light fw-thin">Welcome to <br class="d-none d-xl-block" /><strong class="fw-bolder">Ass</strong>urancy.tn</h1>
+              <p class="fs-2 text-400">Simple measures you can take to enhance the protection of your life and belongings through adequate insurance for the rest of your life..</p><a class="btn btn-primary btn-ensurance mt-5" href="{{ path('about') }}"><span class="fas fa-chevron-right fa-xs btn-icon"></span><span class="btn-text">More info</span></a>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+      </section>
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-0">
+        <div class="col-12 col-lg-6 col-xl-7 mb-4 order-0 order-sm-0"><a class="logo-footer fs-7" href="{{ path('index') }}"><span class="text-primary fw-bolder">Ass</span><span class="fw-thin text-300">urancy.tn</span></a></div>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="d-md-flex justify-content-between pb-1 pt-4">
+                <div class="pb-4">
+                  <ul class="list-unstyled list-inline my-2">
+                    <li class="list-inline-item"><a class="text-decoration-none" href="#!"><i class="fab fa-facebook-square fa-2x social-icons"></i></a></li>
+                    <li class="list-inline-item"><a class="text-decoration-none" href="#!"><i class="fab fa-instagram fa-2x social-icons"></i></a></li>
+                    <li class="list-inline-item"><a class="text-decoration-none" href="#!"><i class="fab fa-twitter-square fa-2x social-icons"> </i></a></li>
+                    <li class="list-inline-item"><a class="text-decoration-none" href="#!"><i class="fab fa-linkedin fa-2x social-icons"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-0 bg-black">
+
+        <div class="container">
+          <div class="row justify-content-md-between justify-content-evenly py-4">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-auto text-center text-md-start">
+              <p class="fs--1 my-2 fw-light text-200">All rights Reserved &copy; Assurancy.tn, 2024</p>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+    </main>
+    <!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+
+
+
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    {% block js %}
+    <script src="{{ asset('vendors/popper/popper.min.js') }}"></script>
+    <script src="{{ asset('vendors/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendors/anchorjs/anchor.min.js') }}"></script>
+    <script src="{{ asset('vendors/is/is.min.js') }}"></script>
+    <script src="{{ asset('vendors/fontawesome/all.min.js') }}"></script>
+    <script src="{{ asset('vendors/lodash/lodash.min.js') }}"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="{{ asset('vendors/prism/prism.js') }}"></script>
+    <script src="{{ asset('assets/js/theme.js') }}"></script>
+    {% endblock %}
+
+  </body>
+
+</html>

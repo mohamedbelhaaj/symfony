@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Call us<a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+            <ul class="navbar-nav ms-auto border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('index') }}">Home</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('offres') }}">Our offers</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('ajouter_un_bien') }}">My goods</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('services') }}">Fast services</a></li>
+              <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="{{ path('about') }}">About us</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('assistance') }}">Assitance</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('community') }}">Community</a></li>
+              {% if (app.session.get('user_role') != "Client") %}
+              <li class="nav-item px-0"><a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a></li>
+              {% endif %}
+            </ul>
+            <div class="d-flex mt-2 align-items-center mt-lg-0">
+              <div class="dropdown">
+                <button class="btn btn-sm d-flex mx-2" id="dropdownMenuButton1" type="submit" data-bs-toggle="dropdown" aria-expanded="false"><img style="border-radius: 50%; width: 30px; height: 30px;" src="{{ asset('uploads/' ~ app.session.get('user_image')|default('images/faces/face28.jpg')) }}" alt="profile"/></button>
+                <div class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end p-0 rounded" aria-labelledby="dropdownMenuButton1" style="top:55px">
+                  <p class="mb-0 ms-auto text-light fs-0 fw-normal text-center">{{app.session.get('user_name')}}</p>
+                  <a class="dropdown-item" href="{{ path('profile',{'id': app.session.get('user_id')}) }}"><i class="fas fa-user-edit text-primary" style="color: black;"></i>   My profile</a>
+                  <a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt text-danger"></i>    Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+{% endblock %}
+
+{% block body %}
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-car-insurance.png);background-position:0 500px;background-size:100% 85%;"></div>
+        <div class="container">
+          <div class="row align-items-center min-vh-100">
+            <div class="col-md-7 col-xl-7 pt-9 text-md-start text-center">
+                <div class="bg-holder" style="background-image:url(assets/img/illustrations/bg.png);background-position:left top;background-size:auto 600px;"></div>
+                <h1 class="display-2 text-light fw-thin">About Us</h1>
+                <p class="fs-2 text-200">"Welcome to Assurancy.tn, your partner in insurance for life, vehicles, real estate, and much more."</p>
+            </div>
+            <div class="col-md-7 col-xl-7 pt-9 text-md-start text-center">
+                <h1 class="display-2 text-light fw-thin">Who are we?</h1>
+                <p class="fs-2 text-200">"Assurancy.tn is much more than just a website. We are a company committed to providing our customers with a modern, convenient, and secure insurance experience. In addition to our website, we also offer a dedicated desktop application to meet all of your insurance needs."</p>
+            </div>
+            <div class="col-md-7 col-xl-7 pt-9 text-md-start text-center">
+                <h1 class="display-2 text-light fw-thin">Our services</h1>
+                <p class="fs-2 text-200">At Assurancy.tn, we understand that each customer has unique needs. That's why we offer a comprehensive range of insurance services, including for life, cars, motorcycles, boats, trucks, real estate, and much more. With us, you benefit from exclusive advantages, such as the ability to make a digital report in case of an accident, to securely pay your insurance online, and even to participate in interactive quizzes that take into account your insurance policy</p>
+            </div>
+            <div class="col-md-7 col-xl-7 pt-9 text-md-start text-center">
+                <h1 class="display-2 text-light fw-thin">Our commitment to you</h1>
+                <p class="fs-2 text-200">At Assurancy.tn, customer satisfaction is our top priority. That's why we provide you with a multitude of features to make your experience as smooth and enjoyable as possible. Not only can you interact with other clients through forums and posts, but you can also request help in case of emergencies using our integrated SOS feature. In case of need, a qualified SOS agent will promptly intervene to assist you.</p>
+            </div>
+            <div class="col-md-7 col-xl-7 pt-9 text-md-start text-center">
+                <h1 class="display-2 text-light fw-thin">Why choose Assurancy.tn?</h1>
+                <p class="fs-2 text-200">- Tailored insurance to meet your specific needs.<br>- Advanced features to facilitate the management of your insurance.<br>- Commitment to the satisfaction and security of our customers.<br>At Assurancy.tn, we are here to protect you and what matters most to you. Trust our expertise and commitment to excellence to provide you with the peace of mind you deserve..</p>
+            </div>
+          </div>
+        </div>
+{% endblock %}

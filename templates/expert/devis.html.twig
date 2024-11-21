@@ -1,0 +1,122 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Devis{% endblock %}
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">List of vehicles</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                      {% if vehicules is not empty %}
+                        <table class="display expandable-table" style="width:100%">
+                            <thead>
+            <tr>
+                <th>Matricule</th>
+                <th>Type</th>
+                <th>Modele</th>
+                <th>Prix</th>
+                <th>Carte_grise</th>
+                <th>Status</th>
+                <th>Devis</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vehicule in vehicules %}
+            <tr>
+                <td>{{ vehicule.matricule }}</td>
+                <td>{{ vehicule.type }}</td>
+                <td>{{ vehicule.modele }}</td>
+                <td>{{ vehicule.prix|default(0) }} TND</td>
+                <td><a href="{{ asset(vehicule.carteGrise) }}" target="_blank"><img src="{{ asset('uploads/' ~ vehicule.carteGrise) }}" alt="" style="width: 50px; height: 50px;"></a></td>
+                <td>{{ vehicule.status }}</td>
+                <td scope="row">
+                <a href="{{ path('app_devis_list', { 'matricule' : vehicule.matricule }) }}"><i class="ti-eye" href="#"></i></a>     
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+                      </table>
+                      {% else %}
+        <p>No results found</p>
+        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endblock %}

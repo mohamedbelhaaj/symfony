@@ -1,0 +1,19 @@
+{% extends 'service/assistance.html.twig' %}
+
+{% block title %}New Reclamation{% endblock %}
+
+{% block body %}
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-car-insurance.png);background-position:left top;background-size:100% 85%;"></div>
+        <div class="container">
+          <div class="row-cols-2 d-flex align-items-center justify-content-center">
+            <div class="card card-bg shadow hero-header-form">
+                <div class="card-body p-4 p-xl-6">
+                    <h1 class="display-2 text-light fw-thin text-center">Réclamer</h1>
+                    {{ include('reclamation/_form.html.twig') }}
+                </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+

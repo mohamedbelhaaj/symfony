@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devis{% endblock %}
+
+{% block body %}
+    <h1>Devis</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ devi.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ devi.date ? devi.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>TotalTTC</th>
+                <td>{{ devi.totalTTC|default(0) }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ devi.etat }}</td>
+            </tr>
+            <tr>
+                <th>Remarque</th>
+                <td>{{ devi.remarque }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% if devi.devisItems|length > 0 %}
+        <table>
+            <thead>
+                <th>#</th>
+                <th>Désignation</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                {% for devI in devi.devisItems %}
+                <tr>
+                    <td>{{ devI.id }}</td>
+                    <td>{{ devI.designation }}</td>
+                    <td>{{ devI.quantite }}</td>
+                    <td>{{ devI.prixU }}</td>
+                    <td>{{ devI.total }}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <a href="{{ path('app_devis_index') }}">back to list</a>
+
+    <a href="{{ path('app_devis_edit', {'id': devi.id}) }}">edit</a>
+
+    {{ include('devis/_delete_form.html.twig') }}
+{% endblock %}

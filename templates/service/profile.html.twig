@@ -1,0 +1,270 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Call us<a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+            <ul class="navbar-nav ms-auto border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('index') }}">Home</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('offres') }}">Our offers</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('ajouter_un_bien') }}">My goods</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('services') }}">Fast services</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('about') }}">About us</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('assistance') }}">Assitance</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('community') }}">Community</a></li>
+              {% if (app.session.get('user_role') != "Client") %}
+              <li class="nav-item px-0"><a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a></li>
+              {% endif %}
+            </ul>
+            <div class="d-flex mt-2 align-items-center mt-lg-0">
+              <div class="dropdown">
+                <button class="btn btn-sm d-flex mx-2" id="dropdownMenuButton1" type="submit" data-bs-toggle="dropdown" aria-expanded="false"><img style="border-radius: 50%; width: 30px; height: 30px;" src="{{ asset('uploads/' ~ app.session.get('user_image')|default('images/faces/face28.jpg')) }}" alt="profile"/></button>
+                <div class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end p-0 rounded" aria-labelledby="dropdownMenuButton1" style="top:55px">
+                  <p class="mb-0 ms-auto text-light fs-0 fw-normal text-center">{{app.session.get('user_name')}}</p>
+                  <a class="dropdown-item" href="{{ path('profile',{'id': app.session.get('user_id')}) }}"><i class="fas fa-user-edit text-primary" style="color: black;"></i>   My profile</a>
+                  <a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt text-danger"></i>    Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      {% endblock %}
+
+{% block body %}
+        <section id="products">
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-car-insurance.png);background-position:0 500px;background-size:100% 85%;"></div>
+        <div class="container-lg">
+          <div class="row flex-center py-8 py-md-10 ">
+            <h1 class="display-2 text-light fw-thin text-center">My profile</h1>
+            <div class="nav flex-row nav-tab" id="nav-tab" role="tablist" aria-orientation="vertical">
+              <a class="btn btn-primary py-1 py-md-1 mx-1 active" id="nav-info-tab" href="#!" data-bs-toggle="tab" data-bs-target="#nav-info" role="tab" aria-controls="nav-info" aria-selected="true">
+                <span class="btn-text">My Informations</span>
+              </a>
+              <a class="btn btn-primary py-1 py-md-1 mx-1" id="nav-ass-tab" href="#!" data-bs-toggle="tab" data-bs-target="#nav-ass" role="tab" aria-controls="nav-ass" aria-selected="false">
+                <span class="btn-text">Mes Insurances</span>
+              </a>
+              <a class="btn btn-primary py-1 py-md-1 mx-1" id="nav-dsos-tab" href="#!" data-bs-toggle="tab" data-bs-target="#nav-dsos" role="tab" aria-controls="nav-dsos" aria-selected="false">
+                <span class="btn-text">My Demands</span>
+              </a>
+              <a class="btn btn-primary py-1 py-md-1 mx-1" id="nav-con-tab" href="#!" data-bs-toggle="tab" data-bs-target="#nav-con" role="tab" aria-controls="nav-con" aria-selected="false">
+                <span class="btn-text">My Constats</span>
+              </a>
+              <a class="btn btn-primary py-1 py-md-1 mx-1" id="nav-rec-tab" href="#!" data-bs-toggle="tab" data-bs-target="#nav-rec" role="tab" aria-controls="nav-rec" aria-selected="false">
+                <span class="btn-text">My Complaints</span>
+              </a>
+              <a class="btn btn-primary py-1 py-md-1 mx-1" id="nav-rdv-tab" href="#!" data-bs-toggle="tab" data-bs-target="#nav-rdv" role="tab" aria-controls="nav-rdv" aria-selected="false">
+                <span class="btn-text">My Appointments</span>
+              </a>
+            </div>
+
+            <div class="tab-content w-60 my-2" id="nav-tabContent">
+
+              <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+                <div class="row align-items-center offset-sm-1 g-3">
+                <div class="card card-bg shadow">
+                  <div class="card-body p-4 p-xl-6">
+                    <div class="row">
+                    <div class="col-md-6 col-xl-5 order-1 order-md-0">
+                      <h3 class="text-light mt-md-2 mb-md-5">My informations</h3>
+                      <img class="img-account-profile rounded-circle" style="width:200px;height:200px" src="{{ asset('uploads/' ~ utilisateur.image|default('images/faces/face28.jpg')) }}" alt="">
+                      {{ include('utilisateur/editform.html.twig') }}
+                    </div>
+                    <div class="col-md-6 col-xl-5 order-2 order-md-0 offset-1">
+                      <h3 class="text-light mt-md-2 mb-md-5">Reset my password</h3>
+                      {% set normal_input_attr = { 'attr': { 'class': 'form-control input-box form-ensurance-header-control', 'required': 'required'} } %}
+                      {{ form_start(formRs, {'attr': {'class': 'mb-3','novalidate' : 'novalidate'}}) }}
+                        <div class="">
+                          {{ form_label(formRs.cup) }}
+                        </div>
+                        <div class="form-floating mb-3">
+                          {{ form_widget(formRs.cup,normal_input_attr) }}
+                          {{ form_errors(formRs.cup) }}
+                        </div>
+                        <div class="form-floating mb-3">
+                          {{ form_widget(formRs.np) }}
+                        </div>
+                        <div class="col-12 d-grid">
+                          <button type="submit" class="btn btn-primary rounded-pill">Reset password</button>
+                        </div>
+                      {{ form_end(formRs) }}
+
+
+<script>
+    // Remove flash message after 5 seconds
+    setTimeout(function() {
+        var flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            flashMessage.remove();
+        }
+    }, 5000); // 5000 milliseconds = 5 seconds
+</script>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-rec" role="tabpanel" aria-labelledby="nav-rec-tab">
+                <div class="row align-items-center offset-sm-1 g-3">
+                  <div class="col-md-8 col-xl-8 order-1 order-md-0">
+                    <h3 class="text-light mt-md-2 mb-md-5">My complaints</h3>
+                    {% if reclamations is not empty %}
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Subject</th>
+                            <th>Content</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for rec in reclamations %}
+                            <tr>
+                              <td>{{ rec.id }}</td>
+                              <td>{{ rec.sujet }}</td>
+                              <td>{{ rec.contenu }}</td>
+                              <td>{{ rec.status }}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    {% else %}
+                      <p class="text-400">No result(s) found</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-rdv" role="tabpanel" aria-labelledby="nav-rdv-tab">
+                <div class="row align-items-center offset-sm-1 g-3">
+                  <div class="col-md-8 col-xl-8 order-1 order-md-0">
+                    <h3 class="text-light mt-md-2 mb-md-5">My Appointments</h3>
+                    {% if rdvs is not empty %}
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Hour</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for rdv in rdvs %}
+                            <tr>
+                              <td>{{ rdv.id }}</td>
+                              <td>{{ rdv.date ? rdv.date|date('d-m-Y') : '' }}</td>
+                              <td>{{ rdv.date ? rdv.date|date('H:m') : '' }}</td>
+                              <td>{{ rdv.status }}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    {% else %}
+                      <p class="text-400">No result(s) found</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-ass" role="tabpanel" aria-labelledby="nav-ass-tab">
+                <div class="row align-items-center offset-sm-1 g-3">
+                  <div class="col-md-8 col-xl-8 order-1 order-md-0">
+                    <h3 class="text-light mt-md-2 mb-md-5">My Insurances</h3>
+                    {% if assurances is not empty %}
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Type</th>
+                            <th>Date start</th>
+                            <th>Date end</th>
+                            <th>Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for ass in assurances %}
+                            <tr>
+                              <td>{{ ass.type }}</td>
+                              <td>{{ ass.getDateD() ? ass.getDateD()|date('Y-m-d') : ''  }}</td>
+                              <td>{{ ass.getDateF() ? ass.getDateF()|date('Y-m-d') : ''  }}</td>
+                              <td>{{ ass.prix | default(0) | format('%.2f TND') }}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    {% else %}
+                      <p class="text-400">No result(s) found</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-dsos" role="tabpanel" aria-labelledby="nav-dsos-tab">
+                <div class="row align-items-center offset-sm-1 g-3">
+                  <div class="col-md-8 col-xl-8 order-1 order-md-0">
+                    <h3 class="text-light mt-md-2 mb-md-5">My Demands SOS</h3>
+                    {% if demandes is not empty %}
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Number of persons</th>
+                            <th>Agent SOS</th>
+                            <th>Your Rating</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for sos in demandes %}
+                            <tr>
+                              <td>{{ sos.id }}</td>
+                              <td>{{ sos.nbrPersonnes }}</td>
+                              <td>{{ sos.agent.prenom|default("") }} {{ sos.agent.nom|default("") }}</td>
+                              <td>{{ sos.rating.note|default("None") }}</td>
+                              <td>{{ sos.status }}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    {% else %}
+                      <p class="text-400">No result(s) found</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-con" role="tabpanel" aria-labelledby="nav-con-tab">
+                <div class="row align-items-center offset-sm-1 g-3">
+                  <div class="col-md-8 col-xl-8 order-1 order-md-0">
+                    <h3 class="text-light mt-md-2 mb-md-5">My constats</h3>
+                    {% if constats is not empty %}
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Creation date</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for con in constats %}
+                            <tr>
+                              <td>{{ con.id }}</td>
+                              <td>{{ con.dateConstat ? con.dateConstat|date('Y-m-d') : ''   }}</td>
+                              <td>{{ con.status }}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    {% else %}
+                      <p class="text-400">No result(s) found</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock %}

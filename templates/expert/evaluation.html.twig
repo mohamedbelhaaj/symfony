@@ -1,0 +1,192 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Evaluation{% endblock %}
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-8 offset-2 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Vehicules and Real Estates Evaluated</p>
+                  <canvas id="VAREChart"
+                  data-custom-data-1 ="{{ DataVARE1 | json_encode | e('html_attr') }}"
+                  data-custom-data-2 ="{{ DataVARE2 | json_encode | e('html_attr') }}"></canvas>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <script src="{{ asset('js/customChartVARE.js') }}"></script>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Véhicules</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        {% if vehicules is not empty %}
+                        <table class="display expandable-table" style="width:100%">
+                            <thead>
+            <tr>
+                <th>Matricule</th>
+                <th>Type</th>
+                <th>Modele</th>
+                <th>Prix</th>
+                <th>Carte_grise</th>
+                <th>Status</th>
+                <th>Evaluation</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vehicule in vehicules %}
+            <tr>
+                <td>{{ vehicule.matricule }}</td>
+                <td>{{ vehicule.type }}</td>
+                <td>{{ vehicule.modele }}</td>
+                <td>{{ vehicule.prix|default(0) }} TND</td>
+                <td><a href="{{ asset(vehicule.carteGrise) }}" target="_blank"><img src="{{ asset('uploads/' ~ vehicule.carteGrise) }}" alt="" style="width: 50px; height: 50px;"></a></td>
+                <td>{{ vehicule.status }}</td>
+                <td scope="row">
+                {% if not vehicule.evaluation %}
+                <a href="{{ path('app_evaluation_newV', { 'matricule' : vehicule.matricule }) }}"><i class="ti-check" href="#"></i></a>     
+                {% else %}    
+                <a href="{{ path('app_evaluation_showV', { 'matricule' : vehicule.matricule }) }}"><i class="ti-eye" href="#"></i></a>
+                <a href="{{ path('app_evaluation_deleteV', { 'matricule' : vehicule.matricule }) }}"><i class="ti-close" href="#"></i></a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+                      </table>
+                      {% else %}
+        <p>No results found</p>
+        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Immobiliers</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        {% if vehicules is not empty %}
+                        <table class="display expandable-table" style="width:100%">
+                            <thead>
+            <tr>
+                <th>Identifiant Fiscale</th>
+                <th>Type</th>
+                <th>Adresse</th>
+                <th>Superficie</th>
+                <th>Titre propriétaire</th>
+                <th>Status</th>
+                <th>Evaluation</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for imm in immobiliers %}
+            <tr>
+                <td>{{ imm.idFiscal }}</td>
+                <td>{{ imm.type }}</td>
+                <td>{{ imm.adresse }}</td>
+                <td>{{ imm.superficie }}m²</td>
+                <td><a href="{{ asset(imm.titreProp) }}" target="_blank"><img src="{{ asset('uploads/' ~ imm.titreProp) }}" alt="" style="width: 50px; height: 50px;"></a></td>
+                <td>{{ imm.status }}</td>
+                <td scope="row">
+                {% if not imm.evaluation %}
+                <a href="{{ path('app_evaluation_newI', { 'id_fiscal' : imm.idFiscal }) }}"><i class="ti-check" href="#"></i></a> 
+                {% else %}    
+                <a href="{{ path('app_evaluation_showI', { 'id_fiscal' : imm.idFiscal }) }}"><i class="ti-eye" href="#"></i></a>
+                <a href="{{ path('app_evaluation_deleteI', { 'id_fiscal' : imm.idFiscal }) }}"><i class="ti-close" href="#"></i></a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+                      </table>
+                      {% else %}
+        <p>No results found</p>
+        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endblock %}

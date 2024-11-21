@@ -1,0 +1,31 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Détails de la demande{{ demande.id }}{% endblock %}
+
+{% block body %}
+    <h1>Détails de la demande</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ demande.id }}</td>
+            </tr>
+            <tr>
+                <th>Localisation</th>
+                <td>{{ demande.localisation }}</td>
+            </tr>
+            <tr>
+                <th>Nbr_personnes</th>
+                <td>{{ demande.nbrPersonnes }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ demande.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_demande_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('app_demande_edit', {'id': demande.id}) }}">Modifier</a>
+{% endblock %}

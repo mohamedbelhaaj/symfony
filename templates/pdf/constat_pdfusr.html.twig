@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Constat PDF</title>
+</head>
+<body>
+<img style="margin-left: 35%; margin-bottom: 5%; " src="https://imgur.com/E9yNJPz.png" alt="Example Image" width="300" height="200">
+<h1 style="margin-left: 25%;">حريفنا الكريم ، شكرا على ثقتك في خدماتنا</h1>
+<h1 style="margin-left: 20%;">Document PDF pour le Constat ID : <span style="color: green; ">{{ cns.getId() }}</span></h1><br><br>
+                              <h3>Num Permis A : <span style="color: blue; ">{{cns.getVehaPermis()}}</span></h3>
+                              <h3>Lieu Orig A : <span style="color: blue; ">{{cns.getVehaAllant()}}</span></h3>
+                              <h3>Lieu Dest A : <span style="color: blue; ">{{cns.getVehaVenant()}}</span></h3>
+                              <h3>Date Délivrance Permis A : <span style="color: blue; ">{{cns.getVehaDatepermis()| date('Y-m-d')}}</span></h3>
+                              <h3>Compagnie Assurance B : <span style="color: blue; ">{{cns.getVehbAssurance()}}</span></h3>
+                              <h3>Num Police Assurance B : <span style="color: blue; ">{{cns.getVehbPolice()}}</span></h3>
+                              <h3>Agence Assurance B : <span style="color: blue; ">{{cns.getVehbAgence()}}</span></h3>
+                              <h3>Date Validité Assurance B : <span style="color: blue; ">{{cns.getVehbAttestationVDD()| date('Y-m-d')}}</span></h3>
+                              <h3>Date Fin Assurance B : <span style="color: blue; ">{{cns.getVehbAttestationVDF()| date('Y-m-d')}}</span></h3>
+                              <h3>Nom Témoin côté B : <span style="color: blue; ">{{cns.getVehbCNom()}}</span></h3>
+                              <h3>Prénom Témoin côté B : <span style="color: blue; ">{{cns.getVehbCPrenom()}}</span></h3>
+                              <h3>Adresse Témoin côté B : <span style="color: blue; ">{{cns.getVehbCAdresse()}}</span></h3>
+                              <h3>Num Permis Témoin côté B : <span style="color: blue; ">{{cns.getVehbCPermis()}}</span></h3>
+                              <h3>Date Délivrance Permis Témoin côté B : <span style="color: blue; ">{{cns.getVehbCDatepermis() | date('Y-m-d')}}</span></h3>
+                              <h3>Nom Témoin côté A : <span style="color: blue; ">{{cns.getVehbANom()}}</span></h3>
+                              <h3>Prénom Témoin côté A : <span style="color: blue; ">{{cns.getVehbAPrenom()}}</span></h3>
+                              <h3>Adresse Témoin côté A : <span style="color: blue; ">{{cns.getVehbAAdresse()}}</span></h3>
+                              <h3>Num Tel témoin côté A : <span style="color: blue; ">{{cns.getVehbATel()}}</span></h3>
+                              <h3>Marque Véhicule B : <span style="color: blue; ">{{cns.getVehbMarque()}}</span></h3>
+                              <h3>Type Véhicule B : <span style="color: blue; ">{{cns.getVehbType()}}</span></h3>
+                              <h3>Matricule Véhicule B : <span style="color: blue; ">{{cns.getVehbMatricule()}}</span></h3>
+                              <h3>Lieu Orig B : <span style="color: blue; ">{{cns.getVehbVenant()}}</span></h3>
+                              <h3>Lieu Dest B : <span style="color: blue; ">{{cns.getVehbAllant()}}</span></h3>
+                              <h3>Circonstances côté A : <span style="color: blue; ">{{cns.getVehaCircomstances()}}</span></h3>
+                              <h3>Circonstances côté B : <span style="color: blue; ">{{cns.getVehbCircomstances()}}</span></h3>
+                              <h3>Blessés : <span style="color: blue; ">
+                               {% if cns.isBlesses() == "1"  %}
+                                  Oui
+                               {% else %}
+                                  Non
+                                {% endif %}
+                              </span>
+                              </h3>
+                              <h3>Statut : <span style="color: blue; ">{{cns.getStatus()}}</span></h3>
+                              
+                              <h3>Date de dépôt Constat : <span style="color: blue; ">{{cns.getDateConstat() | date('Y-m-d') }}</span></h3>
+                              <img style="margin-left: 74%; " src="https://i.imgur.com/O1Am9q5.png" alt="Example Image" >
+                              <h3 style="margin-left: 76%; text-decoration:underline;">Tunis, le <span style="color: red; ">{{dt | date('d/m/Y') }}</span></h3>
+                              </body>
+</html>

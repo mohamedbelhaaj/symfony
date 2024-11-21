@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Assurancy.tn | Assurances</title>
+    <!-- plugins:css -->
+  <link rel="stylesheet" href="/vendors/feather/feather.css">
+  <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" type="text/css" href="/js/select.dataTables.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+  <link rel="shortcut icon" href="/images/logo-mini.png" />
+</head>
+<body style="margin-left:15%">
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                </div>
+                <div class="col-12 col-xl-4">
+                 <div class="justify-content-end d-flex">
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+
+                  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+              <img style="margin-left: 35%; margin-bottom : 5%; margin-top:-5%" src="{{ asset('images/logo_assurancy.png') }}" alt="Example Image" width="300" height="200">
+
+          <h1 style="margin-left: 20%;">Consulter Mes Constats</h1>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+            
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Mes Constats</p>
+
+
+
+
+
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0" style="margin-left:690px; margin-bottom:5px;">
+                    <button style="border:2px dashed green;" class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                     <i class="mdi mdi-calendar"></i> Trier par :
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                      <a class="dropdown-item" href="{{path('datedep' ,{'type': 'recente'})}}">Date de dépôt - La plus récente</a>
+                      <a class="dropdown-item" href="{{path('datedep' ,{'type': 'ancienne'})}}">Date de dépôt - La plus ancienne</a>
+                      <a class="dropdown-item" href="{{path('statut' ,{'type': 'valide'})}}">Statut - Validé</a>
+                      <a class="dropdown-item" href="{{path('statut' ,{'type': 'encours'})}}">Statut - En cours</a>
+                      <a class="dropdown-item" href="{{path('blesse' ,{'type': 'blesseO'})}}">Blessés - Oui</a>
+                      <a class="dropdown-item" href="{{path('blesse' ,{'type': 'blesseN'})}}">Blessés - Non</a>
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>ID Constat</th>
+                              <th>Num Permis A</th>
+                              <th>Lieu Orig A</th>
+                              <th>Lieu Dest A</th>
+                              <th>Date Délivrance Permis A</th>
+                              <th>Compagnie Assurance B</th>
+                              <th>Num Police Assurance B</th>
+                              <th>Agence Assurance B</th>
+                              <th>Date Validité Assurance B</th>
+                              <th>Date Fin Assurance B</th>
+                              <th>Nom Témoin côté B</th>
+                              <th>Prénom Témoin côté B</th>
+                              <th>Adresse Témoin côté B</th>
+                              <th>Num Permis Témoin côté B</th>
+                              <th>Date Délivrance Permis Témoin côté B</th>
+                              <th>Nom Témoin côté A</th>
+                              <th>Prénom Témoin côté A</th>
+                              <th>Adresse Témoin côté A</th>
+                              <th>Num Tel témoin côté A</th>
+                              <th>Marque Véhicule B</th>
+                              <th>Type Véhicule B</th>
+                              <th>Matricule Véhicule B</th>
+                              <th>Lieu Orig B</th>
+                              <th>Lieu Dest B</th>
+                              <th>Circonstances côté A</th>
+                              <th>Circonstances côté B</th>
+                              <th>Photo Accident</th>
+                              <th>Photo Véhicule A</th>
+                              <th>Photo Véhicule B</th>
+                              <th>Blessés</th>
+                              <th>Date de dépôt Constat</th>
+                              <th>Statut</th>
+                              <th>Actions</th>
+                              <th>Génération Fichier PDF</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                        {% for cns in constats %} 
+                            <tr>
+                                    <td>{{cns.getId()}}</td>
+                                    <td>{{cns.getVehaPermis()}}</td>
+                                    <td>{{cns.getVehaVenant()}}</td>
+                                    <td>{{cns.getVehaAllant()}}</td>
+                                    <td>{{cns.getVehaDatepermis() | date('Y-m-d')}}</td>
+                                    <td>{{cns.getVehbAssurance()}}</td>
+                                    <td>{{cns.getVehbPolice()}}</td>
+                                    <td>{{cns.getVehbAgence()}}</td>
+                                    <td>{{cns.getVehbAttestationVDD() | date('Y-m-d')}}</td>
+                                    <td>{{cns.getVehbAttestationVDF() | date('Y-m-d')}}</td>
+                                    <td>{{cns.getVehbCNom()}}</td>
+                                    <td>{{cns.getVehbCPrenom()}}</td>
+                                    <td>{{cns.getVehbCAdresse()}}</td>
+                                    <td>{{cns.getVehbCPermis()}}</td>
+                                    <td>{{cns.getVehbCDatepermis() | date ('Y-m-d')}}</td>
+                                    <td>{{cns.getVehbANom()}}</td>
+                                    <td>{{cns.getVehbAPrenom()}}</td>
+                                    <td>{{cns.getVehbAAdresse()}}</td>
+                                    <td>{{cns.getVehbATel()}}</td>
+                                    <td>{{cns.getVehbMarque()}}</td>
+                                    <td>{{cns.getVehbType()}}</td>
+                                    <td>{{cns.getVehbMatricule()}}</td>
+                                    <td>{{cns.getVehbVenant()}}</td>
+                                    <td>{{cns.getVehbAllant()}}</td>
+                                    <td>{{cns.getVehaCircomstances()}}</td>
+                                    <td>{{cns.getVehbCircomstances()}}</td>
+                                    {# <td><img src="{{ asset('uploads/' ~ cns.getPhotoAccident()) }}" alt="Accident Photo" style="width: 100px; height: auto;"></td> #}
+                                    <td>
+                                        <a href="{{ asset('uploads/' ~ cns.getPhotoAccident()) }}" target="_blank">
+                                        <img src="{{ asset('uploads/' ~ cns.getPhotoAccident()) }}" alt="Accident Photo" style="width: 100px; height: auto;">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ asset('uploads/' ~ cns.getPhotoVeha()) }}" target="_blank">
+                                        <img src="{{ asset('uploads/' ~ cns.getPhotoVeha()) }}" alt="Veh A Photo" style="width: 100px; height: auto;">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ asset('uploads/' ~ cns.getPhotoVehb()) }}" target="_blank">
+                                        <img src="{{ asset('uploads/' ~ cns.getPhotoVehb()) }}" alt="Veh B Photo" style="width: 100px; height: auto;">
+                                        </a>
+                                    </td>
+                                    {# <td><img src="{{ asset('uploads/' ~ cns.getPhotoVeha()) }}" alt="Veh A Photo" style="width: 100px; height: auto;"></td> #}
+                                    {# <td><img src="{{ asset('uploads/' ~ cns.getPhotoVehb()) }}" alt="Veh B Photo" style="width: 100px; height: auto;"></td> #}
+                                    {# <td>{{cns.isBlesses()}}</td> #}
+                                    {% if cns.isBlesses() == "1"  %}
+                                    <td>Oui</td>
+                                    {% else %}
+                                    <td>Non</td>
+                                    {% endif %}
+                                    <td>{{cns.getDateConstat() | date('Y-m-d') }}</td>
+                                    <td style="{{ cns.getStatus() == 'En cours' ? 'color:orange;font-weight:bold;' : 'color:red;font-weight:bold;' }}">
+                                      {{ cns.getStatus() }}
+                                    </td>
+
+                              <td>
+                                <a href="{{ path('constatuser_edit', { id: cns.id }) }}"><i class="ti-pencil"></i></a>
+                                <a href="{{ path('constatuser_delete', { id: cns.id }) }}"><i class="ti-trash"></i></a>
+                              </td>
+                                <td>
+                                    <a href="{{ path('generatepdfuserconstat', {'id': cns.id}) }}"><img src="{{ asset('images/pdf1.png') }}" alt="pdficon" style="width: 35px; height: auto; margin-left:15px;"></td></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                     
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <a href="{{ path('add_constat') }}" class="btn btn-primary">Retour à la page d'ajout constat</a>
+        </div>
+        
+                <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024.  Assurancy.tn</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+    <!-- plugins:js -->
+  <script src="/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="/vendors/chart.js/Chart.min.js"></script>
+  <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <script src="/js/dataTables.select.min.js"></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="/js/off-canvas.js"></script>
+  <script src="/js/hoverable-collapse.js"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/Chart.roundedBarCharts.js"></script>
+
+  <style>
+  body{
+    background-color: #f5f7ff;
+  }
+  th {
+            border: 1px solid #dddddd;
+}
+  </style>
+  </body>
+
+</html>
+

@@ -1,0 +1,124 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Devis{% endblock %}
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+          <a class="btn btn-primary" href="{{ path('devis_expert') }}"><i class="ti-arrow-left" href=""></i>Retour</a>
+          <a class="btn btn-primary" href="{{ path('app_devis_new', {'matricule' : vehicule.matricule}) }}"><i class="ti-plus" href=""></i>Add Devis</a>
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Vehicule {{ vehicule.matricule }}</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                      {% if vehicule.devis is not empty %}
+                        <table class="display expandable-table" style="width:100%">
+                            <thead>
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Total TTC</th>
+                <th>Remarque</th>
+                <th>Items</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dev in vehicule.devis %}
+            <tr>
+                <td>{{ dev.id }}</td>
+                <td>{{ dev.date ? dev.date|date('Y-m-d') : ''  }}</td>
+                <td>{{ dev.totalTTC }} TND</td>
+                <td>{{ dev.remarque }}</td>
+                <td>{{ dev.devisItems|length }}</td>
+                <td scope="row">
+                    <a href="{{ path('app_devisItems_list',{'id': dev.id}) }}"><i class="ti-eye" href=""></i></a>
+                    <a href="{{ path('app_devis_edit',{'id': dev.id}) }}"><i class="ti-pencil" href="#"></i></a>  
+                    <a href="{{ path('app_devis_delete',{'id': dev.id}) }}"><i class="ti-trash" href="#"></i></a>        
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+                      </table>
+                      {% else %}
+        <p>No results found</p>
+        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endblock %}

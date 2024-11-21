@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block titre %}Assurancy.tn | Login{% endblock %}</title>
+  <!-- plugins:css -->
+  {% block css %}
+  <link rel="stylesheet" href="{{ asset('vendors/feather/feather.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/ti-icons/css/themify-icons.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
+  {% endblock %}
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{ asset('images/logo-mini.png') }}" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <img src="{{ asset('images/logo.png') }}" alt="logo">
+              </div>
+              <h4>Hello! let's get started</h4>
+              <h6 class="font-weight-light">Sign in to continue.</h6>
+              <form class="pt-3" method="post">
+                      {% if error %}
+                        <div class="alert alert-danger">* {{ error }}</div>
+                      {% endif %}
+                      {% for flash_message in app.session.flashbag.get('success') %}
+                        <div class="alert alert-success">
+                          * {{ flash_message }}
+                        </div>
+                      {% endfor %}
+                      {% for flash_message in app.session.flashbag.get('error') %}
+                        <div class="alert alert-danger">
+                          * {{ flash_message }}
+                        </div>
+                      {% endfor %}
+                      <div class="form-group">
+                        <label for="inputEmail">E-mail</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control form-control-lg" autocomplete="email" autofocus>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputPassword">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" autocomplete="current-password" >
+                      </div>
+                      <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                      <div class="mt-3">
+                        <p class="text-400 mt-3 text-center">Forget password ? <a href="{{ path('reset_RequestA') }}">Click here</a></p>
+                        <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Sign in</button>
+                      </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  {% block js %}
+  <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{{ asset('js/off-canvas.js') }}"></script>
+  <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
+  <script src="{{ asset('js/template.js') }}"></script>
+  <script src="{{ asset('js/settings.js') }}"></script>
+  <script src="{{ asset('js/todolist.js') }}"></script>
+  <script>
+    setInterval(function() {
+    // Make an AJAX request to check the session status
+      fetch('/check-session')
+        .then(response => response.json())
+        .then(data => {
+            if (data.sessionChanged) {
+                // If the session has changed, refresh the page
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error checking session status:', error);
+        });
+    }, 5000);
+    </script>
+  <!-- endinject -->
+  {% endblock %}
+</body>
+
+</html>

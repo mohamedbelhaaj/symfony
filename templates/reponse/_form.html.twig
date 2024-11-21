@@ -1,0 +1,15 @@
+{% set normal_input_attr = { 'attr': { 'class': 'form-control p-input', 'required': 'required'} } %}
+{% for flashMessage in app.flashes('error') %}
+    <div class="alert alert-danger" id='flash-message'>{{ flashMessage }}</div>
+{% endfor %}
+{{ form_start(form, {'attr': {'class': 'forms-sample', 'novalidate': 'novalidate'}}) }}
+    <div class="form-group">
+        {{ form_label(form.description,"description") }}
+        {{ form_widget(form.description,normal_input_attr) }}
+        {{ form_errors(form.description) }}
+    </div>
+    <div class="col-12">
+    <button type="submit" class="btn btn-primary" id="submit-btn" onclick="return validateForm();">{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(form) }}
+   

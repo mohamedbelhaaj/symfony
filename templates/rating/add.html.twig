@@ -1,0 +1,19 @@
+
+   {% set normal_input_attr = { 'attr': { 'class': 'form-control input-box form-ensurance-header-control', 'required': 'required'} } %}
+    <h1 class="text-100 text-center">Ajouter un avis</h1>
+
+    {{ form_start(formR, {'attr' : {'class' : 'mb-3', 'novalidate' : 'novalidate'}}) }}
+    <div class="form-floating mb-3">
+    {{ form_widget(formR.note, normal_input_attr|merge({'id': 'floatingNote'})) }}
+    {{ form_label(formR.note, "Votre Note", {'label_attr': {'for': formR.note.vars.id}}) }}
+    {{ form_errors(formR.note) }}
+    </div>
+    <div class="form-floating mb-3">
+    {{ form_widget(formR.commentaire, normal_input_attr|merge({'id': 'floatingNote'})) }}
+    {{ form_label(formR.commentaire, "Votre Commentaire", {'label_attr': {'for': formR.commentaire.vars.id}}) }}
+    {{ form_errors(formR.commentaire) }}
+    </div>
+    <div class="col-12 d-grid">
+    <button class="btn btn-primary rounded-pill">{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(formR) }}

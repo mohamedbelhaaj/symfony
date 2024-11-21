@@ -1,0 +1,257 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Assurances{% endblock %}
+{% block body %}
+    <!-- partial -->
+    <!-- partial:partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">Bienvenue à votre Dashboard des <span class="text-primary" style="text-decoration:underline;">Assurances</span></h3>
+                  <h6 class="font-weight-normal mb-0">Vous trouverez ici toutes les informations liées aux Assurances qui sont effectuées à notre plateforme.</h6>
+                </div>
+                <div class="col-12 col-xl-4">
+                 <div class="justify-content-end d-flex">
+
+
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              {# <div class="card tale-bg" style="background-color:red;"> #}
+                {# <div class="card-people mt-auto" style="width:50%;" > #}
+                  {# <img src="images/dashboard/people.svg" alt="people"> #}
+                  <img src="{{ qrCodes }}" style="width:300px;height:300px; margin-left:90px;" alt="qrcode">
+                  {# <div class="weather-info"> #}
+                    {# <div class="d-flex"> #}
+
+                    {# </div> #}
+                  {# </div> #}
+                {# </div> #}
+              {# </div> #}
+            </div>
+
+                          {% set nb_veh = 0 %}
+                          {% set nb_immob = 0 %}
+                          {% set nb_vie = 0 %}
+                          {% set dejafini = 0 %}
+                          {% set dateencrs = 0 %}
+
+                        {% for x in assur %}
+                            {% if x.getType() == "Assurance Véhicule" %} 
+                              {% set nb_veh = nb_veh +1 %} 
+                            {% elseif x.getType() == "Assurance Immobilière" %}
+                              {% set nb_immob = nb_immob + 1 %}
+                            {% else %}
+                              {% set nb_vie = nb_vie + 1 %}
+                            {% endif %}
+                            {% if x.getDateF()|date('Y-m-d') < currentDate|date('Y-m-d') %}
+                              {% set dejafini = dejafini +1 %}
+                            {% else %}
+                            {% set dateencrs = dateencrs +1 %}
+                            {% endif %}
+                        {% endfor %}
+
+
+
+            <div class="col-md-6 grid-margin transparent">
+              <div class="row">
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-tale">
+                    <div class="card-body">
+                      <p class="mb-4">Total Assurances</p>
+                      <p class="fs-30 mb-2">{{ assur|length }}</p>
+                      <p>dont <span style="font-weight:bold; font-size:20px; font-style:italic; color:#33FF33;">{{dateencrs}}</span> sont actives.</p>
+                      <p>dont <span style="font-weight:bold; font-size:20px; font-style:italic; color:red;">{{dejafini}}</span> sont déja expirées.</p>                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-dark-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Total Assurances Véhicules</p>
+                      <p class="fs-30 mb-2">{{ nb_veh }}</p>
+                      {% set repveh = ( nb_veh / assur|length ) * 100  %}
+                      <p>Représente <span style="font-weight:bold; font-size:20px; font-style:italic; color:#f4d06f;">{{repveh | number_format(2,',')}} %</span> du total des assurances.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                  <div class="card card-light-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Total Assurances Immobilières</p>
+                      <p class="fs-30 mb-2">{{ nb_immob }}</p>
+                       {% set repimmob = ( nb_immob / assur|length ) * 100  %}
+                      <p>Représente <span style="font-weight:bold; font-size:20px; font-style:italic; color:#8bcaf7;">{{repimmob | number_format(2,',')}} %</span> du total des assurances.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 stretch-card transparent">
+                  <div class="card card-light-danger">
+                    <div class="card-body">
+                      <p class="mb-4">Total Assurances Vies</p>
+                      <p class="fs-30 mb-2">{{ nb_vie }}</p>
+                      {% set repvie = ( nb_vie / assur|length ) * 100  %}
+                      <p>Représente <span style="font-weight:bold; font-size:20px; font-style:italic; color:#d0d0d0;">{{repvie | number_format(2,',')}} %</span> du total des assurances.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                    <div style="margin-bottom:50px;">
+                        <a href="{{ path('ntftout') }}" class="btn btn-primary" style="margin-left:40px;width:200px; height:65px;">Notifier les utilisateurs qui ont des contrats expirés</a>
+                        <a href="{{ path('remise') }}" class="btn btn-primary" style="margin-left:10px;width:200px; height:65px;">Faire une réduction de 10 % pour tout le monde</a>
+         </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Gestion des Assurances</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>ID Assurance</th>
+                              <th>ID USER</th>
+                              <th>ID Immobilier</th>
+                              <th>ID Véhicule</th>
+                              <th>Type Assurance</th>
+                              <th>Date Début</th>
+                              <th>Date Fin</th>
+                              <th>Prix</th>
+                              <th>Notifier Client</th>
+                              <th>Prolongement</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for ass in assur %} 
+                            <tr>
+                              {# <td scope="row">1</td> #}
+                              <td>{{ ass.getId() }}</td>
+                              {% if ass.getIdUser() %}
+                                    <td>{{ ass.getIdUser().getId() }}</td> {# id #}
+                              {% else %}
+                                    <td>N/A</td>
+                              {% endif %}
+                              {% if ass.getIdImmobilier() %}
+                                    <td>{{ ass.getIdImmobilier().getIdFiscal() }}</td>  {# id fiscal #}
+                              {% else %}
+                                    <td>N/A</td>
+                              {% endif %}
+                              {% if ass.getIdVehicule() %}
+                                    <td>{{ ass.getIdVehicule().getMatricule() }}</td> {# matricule #}
+                              {% else %}
+                                    <td>N/A</td>
+                              {% endif %}
+                              <td>{{ ass.getType() }}</td>
+                              <td>{{ ass.getDateD() | date('Y-m-d') }}</td>
+                              <td>{{ ass.getDateF() | date('Y-m-d') }}</td>
+                              <td>{{ ass.getPrix() }}</td>
+
+
+                             {% if ass.getDateF()|date('Y-m-d') < currentDate|date('Y-m-d') %}
+                             <td>
+                                 {# <a href="{{ path('send_sms', { id: ass.getIdUser().getPrenom(), telass: ass.getIdUser().getTel() }) }}" style="color:red; font-weight:bold;">Notifier</a> #}
+                                <a href="{{ path('send_sms', { id: ass.getIdUser().getId() , id2:ass.getId() }) }}" style="color:red; font-weight:bold;">Notifier</a>
+
+                             </td>
+                             <td>
+                             <a href="{{ path('prolonger', { id:ass.getId() }) }}" style="color:blue; font-weight:bold;">Prolonger</a>
+                             </td>
+                             {% else %}
+                             <td></td>
+                             <td></td>
+                            {% endif %}
+                                <td>
+                                <a href="{{ path('assurance_edit', { id: ass.getId() }) }}"><i class="ti-pencil"></i></a>
+                                <a href="{{ path('assurance_delete', { id: ass.getId() }) }}"><i class="ti-trash"></i></a>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endblock %}

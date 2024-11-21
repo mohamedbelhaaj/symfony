@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mechano{% endblock %}
+
+{% block body %}
+    <h1>Mechano</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mechano.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ mechano.nom }}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ mechano.Lieu }}</td>
+            </tr>
+            <tr>
+                <th>Tel</th>
+                <td>{{ mechano.tel }}</td>
+            </tr>
+            <tr>
+                <th>Specialite</th>
+                <td>{{ mechano.specialite }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_mechano_index') }}">back to list</a>
+
+    <a href="{{ path('app_mechano_edit', {'id': mechano.id}) }}">edit</a>
+
+    {{ include('mechano/_delete_form.html.twig') }}
+{% endblock %}

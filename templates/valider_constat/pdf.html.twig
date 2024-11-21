@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title> Constat  </title>
+ <style>
+ 	    body {
+			background-color: #F5F5F5;
+		}
+		
+		h2 {
+			color: #4CAF50;
+			text-align: center;
+			margin-top: 50px;
+		}
+
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			max-width: 800px;
+			margin: auto;
+		}
+		th, td {
+			border: 1px solid #ddd;
+			padding: 8px;
+			text-align: left;
+		}
+		th {
+			background-color: #4CAF50;
+			color: white;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+		tr:hover {
+			background-color: #ddd;
+		}
+	</style>
+</head>	
+<body>
+<h2> Constat  </h2>
+    <table class="table align-middle">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Vehicule A</th>
+      <th scope="col"></th>
+      <th scope="col">Vehicule B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Num Permis</th>
+      <td>{{cns.getVehaPermis()}}</td>
+      <td></td>
+      <td>{{cns.getVehbCPermis()}}</td>
+    </tr>
+    <tr class="align-bottom">
+      <th scope="row">Venant de </th>
+      <td>{{cns.getVehaVenant()}}</td>
+      <td></td>
+      <td>{{cns.getVehbVenant()}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Allant a</th>
+      <td>{{cns.getVehaAllant()}}</td>
+      <td></td>
+      <td>{{cns.getVehbAllant()}}</td>
+    </tr>
+      <tr>
+      <th scope="row">Date Délivrance Permis</th>
+      <td>{{cns.getVehaDatepermis() | date('Y-m-d')}}</td>
+      <td></td>
+      <td>{{cns.getVehbCDatepermis() | date ('Y-m-d')}}</td>
+    </tr>
+      <tr>
+      <th scope="row">Compagnie Assurance</th>
+      <td>Assurancy.tn</td>
+      <td></td>
+      <td>{{cns.getVehbAssurance()}}</td>
+     </tr>
+      <tr>
+      <th scope="row">Agence Assurance</th>
+      <td>Assurancy.tn</td>
+      <td></td>
+      <td>{{cns.getVehbAgence()}}</td>
+    </tr>
+      </tr>
+      <tr>
+      <th scope="row">Num Police Assurance</th>
+      <td></td>
+      <td></td>
+      <td>{{cns.getVehbPolice()}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Date debut Validité Assurance</th>
+      <td></td>
+      <td></td>
+      <td>{{cns.getVehbAttestationVDD() | date('Y-m-d')}}</td>
+    </tr>
+       <tr>
+      <th scope="row">Date Fin Validité Assurance</th>
+      <td></td>
+      <td></td>
+      <td>{{cns.getVehbAttestationVDF() | date('Y-m-d')}}</td>
+    </tr>
+      <tr>
+      <th scope="row">Nom Témoin</th>
+      <td>{{cns.getVehbANom()}}</td>
+      <td></td>
+      <td>{{cns.getVehbCNom()}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Prenom Témoin</th>
+      <td>{{cns.getVehbAPrenom()}}</td>
+      <td></td>
+      <td>{{cns.getVehbCPrenom()}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Adresse Témoin</th>
+      <td>{{cns.getVehbAAdresse()}}</td>
+      <td></td>
+      <td>{{cns.getVehbCAdresse()}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Num Tel témoin</th>
+      <td>{{cns.getVehbATel()}}</td>
+      <td></td>
+      <td>{{cns.getVehbATel()}}</td>
+    </tr>
+       <tr>
+      <th scope="row">Marque Véhicule</th>
+      <td></td>
+      <td></td>
+      <td>{{cns.getVehbMarque()}}</td>
+    </tr>
+     </tr>
+       <tr>
+      <th scope="row">Type Véhicule</th>
+      <td></td>
+      <td></td>
+      <td>{{cns.getVehbType()}}</td>
+    </tr>
+     </tr>
+       <tr>
+      <th scope="row">Matricule Véhicule</th>
+      <td>Mark</td>
+      <td></td>
+      <td>{{cns.getVehbMatricule()}}</td>
+    </tr>
+    </tr>
+       <tr>
+      <th scope="row">Circonstances</th>
+      <td>{{cns.getVehaCircomstances()}}</td>
+      <td></td>
+      <td>{{cns.getVehbCircomstances()}}</td>
+    </tr>
+      
+      <td class="align-top"></td>
+    </tr>
+      <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    
+  </tbody>
+</table>
+        </body>
+</html>

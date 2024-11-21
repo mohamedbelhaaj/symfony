@@ -1,0 +1,24 @@
+<div>
+
+        <div class="container">
+        {{form_start(form,{'attr':{'class' : 'mb-3','novalidate':'novalidate'}})}}
+
+        <div class="form-floating mb-3">      
+            {{ form_widget(form.date,{ 'attr': {'class': 'form-control input-box form-ensurance-header-control', 'id' : 'floatingD'} }) }} 
+            {{ form_label(form.date,"Date",{ 'attr': {'for' : 'floatingD'} }) }} 
+           
+            {% if form_errors(form.date) is not empty %}
+                <div class="alert alert-danger" >
+                    {{ form_errors(form.date) }}
+                </div>
+            {% endif %}
+        </div>
+         <div class="col-12 d-grid">
+            <button class="btn btn-primary rounded-pill" >{{ button_label|default('Save') }}</button>
+        </div>
+{{ form_end(form) }}
+
+
+        
+</div>
+</div>

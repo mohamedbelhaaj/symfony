@@ -1,0 +1,62 @@
+    {% extends 'service/community.html.twig' %}
+
+    {% block title %}Publication Details{% endblock %}
+
+    {% block body %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 offset-md-3 my-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color:white;">{{ publication.titre }}</h5>
+                            <p class="card-text">Published on: {{ publication.date ? publication.date|date('Y-m-d H:i:s') : '' }}</p>
+                            <p class="card-text">{{ publication.contenu }}</p>
+                            {% if publication.image %}
+                                <img src="{{ asset('uploads/' ~ publication.image) }}" class="card-img-top" alt="Publication Image" style="max-width: 500px;">
+                            {% endif %}
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if like %}
+                                    <a href="{{ path('app_publication_like', {'id': publication.id}) }}" class="btn btn-link"><i class="fas fa-heart"></i>  Unlike</a>
+                                {% else %}
+                                    <a href="{{ path('app_publication_like', {'id': publication.id}) }}" class="btn btn-link"><i class="fas fa-heart"></i>  Like</a>
+                                {% endif %}
+                                <a href="{{ path('app_publication_comments', {'id': publication.id}) }}" class="btn btn-link"><i class="fas fa-comment"></i>  Comments</a>
+                            </div>
+                            <div>
+                                {% if app.session.get('user_id') == publication.idUser.id %}
+                                <a href="{{ path('app_publication_edit', {'id': publication.id}) }}" class="btn btn-link">Edit</a>
+                                <form action="{{ path('app_publication_delete', {'id': publication.id}) }}" method="post" style="display: inline-block;">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ publication.id) }}">
+                                    <button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you want to delete this publication?')">Delete</button>
+                                </form>
+                                {% endif %}
+                                <a href="{{ path('app_publication_index') }}" class="btn btn-link">Back to forum</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var showCommentsBtn = document.getElementById('show-comments-btn');
+        var commentSection = document.getElementById('comment-section-spec');
+
+        if (showCommentsBtn && commentSection) {
+            showCommentsBtn.addEventListener('click', function () {
+                if (commentSection.style.display === 'none') {
+                    commentSection.style.display = 'block';
+                    commentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    commentSection.style.display = 'none';
+                }
+            });
+        }
+    });
+    </script>
+    {% endblock %}

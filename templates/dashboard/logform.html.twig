@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+{% set normal_input_attr = { 'attr': { 'class': 'form-control form-control-lg', 'required': 'required'} } %}
+{% for flashMessage in app.flashes('error') %}
+    <div class="alert alert-danger" id='flash-message'>{{ flashMessage }}</div>
+{% endfor %}
+{{ form_start(form, {'attr': {'class': 'pt-3'}}) }}
+    <div class="form-group">
+        {{ form_label(form.email,"E-mail", {'label_attr': {'for': form.email.vars.id}}) }}
+        {{ form_widget(form.email,normal_input_attr|merge({'id': 'floatingInsEmail', 'placeholder': 'Votre addresse e-mail'})) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.mdp,"Mot de Passe", {'label_attr': {'for': form.mdp.vars.id}}) }}
+        {{ form_widget(form.mdp,normal_input_attr|merge({'id': 'floatingInsMdp', 'placeholder': 'Votre mot de passe', 'type': 'password'})) }}
+    </div>
+    <div class="mt-3">
+    <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" id="submit-btn" onclick="return validateForm();">{{ button_label|default("S'authentifier") }}</button>
+    </div>
+{{ form_end(form) }}
+
+
+<script>
+    // Remove flash message after 5 seconds
+    setTimeout(function() {
+        var flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            flashMessage.remove();
+        }
+    }, 5000); // 5000 milliseconds = 5 seconds
+</script>

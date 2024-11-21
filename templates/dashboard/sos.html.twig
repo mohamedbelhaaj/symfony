@@ -1,0 +1,397 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | SOS{% endblock %}
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-7 offset-2 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                 <div class="d-flex justify-content-between">
+                  <p class="card-title">Rating on demands</p>
+                 </div>
+                  <p class="font-weight-500">The doughnut chart illustrates the total number of SOS ratings on demand. Each segment represents a distinct category of ratings, offering insight into user engagement with our SOS feature.</p>
+                  <canvas id="SOSChart"
+                  data-custom-labels="{{ LabelsR | json_encode | e('html_attr') }}"
+                  data-custom-data="{{ DataR | json_encode | e('html_attr') }}"></canvas>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <script src="{{ asset('js/customChart2.js') }}"></script>
+                  </div>
+              </div>
+            </div>
+          </div>
+          {% for message in app.flashes('error') %}
+            <div id="flash-message" class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+          <div class="card">
+          <div class="card-body">
+              <p class="card-title">Demande En cours</p>
+              <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Temps Estimée</th>
+                              <th>Nombre de personnes</th>
+                              <th>Client</th>
+                              <th>Téléphone</th>
+                              <th>SOS</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for demande in demandes %}
+                            {% if demande.status == "Acceptée" %}
+                            <tr>
+                              <td scope="row">{{ demande.id }}</td>
+                              <td>{{ demande.TempsEstime }} minutes</td>
+                              <td>{{ demande.nbrPersonnes }}</td>
+                              <td>{{ demande.user.prenom }} {{ demande.user.nom }}</td>
+                              <td>{{ demande.user.tel }}</td>
+                              <td>{{ demande.agent.prenom }} {{ demande.agent.nom }}</td>
+                              <td>{{ demande.status }}</td>
+                              <td>
+                                <a href="{{ path('app_demande_end', {'id' : demande.id}) }}"><i class="ti-check-box" href="#"></i></a>
+                              </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                          </tbody>
+                      </table>
+          </div>
+          </div>
+          <br>
+          <script>
+    // Function to accept SOS and calculate estimated time
+    function acceptSOS(location, demandId) {
+        // Split the location string to extract latitude and longitude of the demand
+        var locationParts = location.split(',');
+        var demandLatitude = parseFloat(locationParts[0]);
+        var demandLongitude = parseFloat(locationParts[1]);
+
+        // Get the current position of the agent
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var agentLatitude = position.coords.latitude;
+                var agentLongitude = position.coords.longitude;
+
+                // Calculate distance between demand and agent
+                var distance = calculateDistance(demandLatitude, demandLongitude, agentLatitude, agentLongitude);
+
+                // Average speed in km/h
+                var speed = 40;
+
+                // Calculate estimated time in minutes
+                var estimatedTimeHours = distance / speed; // Estimated time in hours
+                var estimatedTimeMinutes = estimatedTimeHours * 60; // Convert hours to minutes
+
+                // Send estimated time to Symfony route
+                sendEstimatedTimeToRoute(estimatedTimeMinutes, demandId);
+            });
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    }
+    // Loop through each demand and calculate distance for each
+{% for demande in demandes %}
+    // Get demand location and ID
+    var demandLocation = "{{ demande.localisation }}";
+    var demandId = "{{ demande.id }}";
+
+    // Calculate distance and update HTML
+    calculateDistanceAndUpdate(demandLocation, demandId);
+{% endfor %}
+
+// Function to calculate distance between demand and agent, and update HTML
+function calculateDistanceAndUpdate(demandLocation, demandId) {
+    // Split the demand location string to extract latitude and longitude
+    var locationParts = demandLocation.split(',');
+    var demandLatitude = parseFloat(locationParts[0]);
+    var demandLongitude = parseFloat(locationParts[1]);
+
+    // Get the current position of the agent
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var agentLatitude = position.coords.latitude;
+            var agentLongitude = position.coords.longitude;
+
+            // Calculate distance between demand and agent
+            var distance = calculateDistance(agentLatitude, agentLongitude, demandLatitude, demandLongitude);
+
+            // Update HTML with the calculated distance
+            var distanceElement = document.getElementById('distance_' + demandId);
+            if (distanceElement) {
+                distanceElement.textContent = distance.toFixed(2) + ' km';
+            }
+        });
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
+}
+
+
+    // Function to calculate distance between two points
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        var earthRadius = 6371; // Radius of the Earth in km
+        var deltaLat = deg2rad(lat2 - lat1);
+        var deltaLon = deg2rad(lon2 - lon1);
+        var a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var distance = earthRadius * c; // Distance in km
+        return distance;
+    }
+
+    // Function to convert degrees to radians
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+    }
+
+    // Function to send estimated time to Symfony route
+    function sendEstimatedTimeToRoute(estimatedTime, demandId) {
+        // AJAX request to Symfony route to store the estimated time
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('app_demande_accept') }}", // Replace with your Symfony route
+            data: {
+                estimatedTime: estimatedTime,
+                id: demandId
+            },
+            success: function(response) {
+                // Handle success if needed
+                console.log('Estimated time sent to route:', estimatedTime);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+</script>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Demandes SOS En Attente</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Distance</th>
+                              <th>Nombre de personnes</th>
+                              <th>Client</th>
+                              <th>Téléphone</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for demande in demandes %}
+                            {% if demande.status == "En Attente" %}
+                            <tr>
+                              <td scope="row">{{ demande.id }}</td>
+                              <td><span id="distance_{{ demande.id }}">Calculating...</span></td>
+                              <td>{{ demande.nbrPersonnes }}</td>
+                              <td>{{ demande.user.prenom }} {{ demande.user.nom }}</td>
+                              <td>{{ demande.user.tel }}</td>
+                              <td>{{ demande.status }}</td>
+                              <td>
+                                <a href="" onclick="acceptSOS('{{ demande.localisation }}', '{{ demande.id }}')"><i class="ti-check"></i></a>
+                                <a href="{{ path('app_demande_delete', {'id' : demande.id}) }}"><i class="ti-trash" href="#"></i></a>
+                              </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Demandes SOS Fini</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Localisation</th>
+                              <th>Nombre de personnes</th>
+                              <th>Client</th>
+                              <th>Téléphone</th>
+                              <th>SOS</th>
+                              <th>Status</th>
+                              <th>Note</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for demande in demandes %}
+                            {% if demande.status == "Terminée" %}
+                            <tr>
+                              <td scope="row">{{ demande.id }}</td>
+                              <td>{{ demande.localisation }}</td>
+                              <td>{{ demande.nbrPersonnes }}</td>
+                              <td>{{ demande.user.prenom }} {{ demande.user.nom }}</td>
+                              <td>{{ demande.user.tel }}</td>
+                              <td>{{ demande.agent.prenom }} {{ demande.agent.nom }}</td>
+                              <td>{{ demande.status }}</td>
+                              <td>
+                              {% if demande.rating %}
+                              {{ demande.rating.note }}
+                              {% else %}
+                                Non saisie
+                              {% endif %}
+                              </td>
+                              <td>
+                                <a href="{{ path('app_demande_delete', {'id' : demande.id}) }}"><i class="ti-trash" href="#"></i></a>
+                              </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+          <div class="row">
+          <button type="button" class="btn btn-primary" onclick="window.location='{{ path('app_mechano_new') }}'"><i class="ti-plus"></i>  Ajouter mécanicien</button>
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Mecaniciens</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Nom</th>
+                              <th>Lieu</th>
+                              <th>Téléphone</th>
+                              <th>Spécialité</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for mechano in mechanos %}
+                            <tr>
+                              <td scope="row">{{ mechano.id }}</td>
+                              <td>{{ mechano.nom }}</td>
+                              <td>{{ mechano.lieu }}</td>
+                              <td>{{ mechano.tel }}</td>
+                              <td>{{ mechano.specialite }}</td>
+                              <td>
+                                <a href="{{ path('app_mechano_edit', {'id' : mechano.id}) }}"><i class="ti-pencil" href="#"></i></a>
+                                <a href="{{ path('app_mechano_delete', {'id' : mechano.id}) }}"><i class="ti-trash" href="#"></i></a>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endblock %}
+{% block flashRef %}
+<script>
+    // Automatically remove flash messages after 5 seconds
+    setTimeout(function() {
+        var flashMessages = document.querySelectorAll('.alert-danger');
+        if (flashMessages) {
+            flashMessages.forEach(function(flashMessage) {
+                flashMessage.remove();
+            });
+        }
+    }, 5000); // 5000 milliseconds = 5 seconds
+</script>
+{% endblock %}
+
+

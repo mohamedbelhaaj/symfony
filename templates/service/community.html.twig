@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Community{% endblock %}
+
+{% block css %}
+    
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="{{ asset('vendors/prism/prism.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/theme.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/CommunityCSS.css') }}" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Call us<a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+            <ul class="navbar-nav ms-auto border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('index') }}">Home</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('offres') }}">Our offers</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('ajouter_un_bien') }}">My goods</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('services') }}">Fast services</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('about') }}">About us</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('assistance') }}">Assitance</a></li>
+              <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="{{ path('community') }}">Community</a></li>
+              {% if (app.session.get('user_role') != "Client") %}
+              <li class="nav-item px-0"><a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a></li>
+              {% endif %}
+            </ul>
+            <div class="d-flex mt-2 align-items-center mt-lg-0">
+              <div class="dropdown">
+                <button class="btn btn-sm d-flex mx-2" id="dropdownMenuButton1" type="submit" data-bs-toggle="dropdown" aria-expanded="false"><img style="border-radius: 50%; width: 30px; height: 30px;" src="{{ asset('uploads/' ~ app.session.get('user_image')|default('images/faces/face28.jpg')) }}" alt="profile"/></button>
+                <div class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end p-0 rounded" aria-labelledby="dropdownMenuButton1" style="top:55px">
+                  <p class="mb-0 ms-auto text-light fs-0 fw-normal text-center">{{app.session.get('user_name')}}</p>
+                  <a class="dropdown-item" href="{{ path('profile',{'id': app.session.get('user_id')}) }}"><i class="fas fa-user-edit text-primary" style="color: black;"></i>   My profile</a>
+                  <a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt text-danger"></i>    Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+{% endblock %}
+    
+
+{% block body %}
+<div class="event-schedule-area-two bg-color pad100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title text-center">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="primary-btn text-center flex-right" >
+                <a href="{{ path('app_publication_new') }}" class="btn btn-primary"> <i class="fa-solid fa-plus"></i>Add Publication</a>
+            </div>
+            <div class="title-text">
+              <h2 class="text-center" style="color:white;">Our Community</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">Date</th>
+                                        <th scope="col">Post</th>
+                                        <th scope="col">Publication</th>
+                                        <th class="text-center" scope="col">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for publication in publications %}
+                                    <tr class="inner-box">
+                                        <th scope="row">
+                                            <div class="event-date">
+                                                <span>{{ publication.date ? publication.date|date('Y-m-d H:i:s') : '' }}</span>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <div class="event-img">
+                                                {% if publication.image %}
+                                                <img src="{{ asset('uploads/' ~ publication.image) }}" alt="" />
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="event-wrap">
+                                                <h3><a href="#">{{ publication.titre }}</a></h3>
+                                                <div class="meta">
+                                                    <div>
+                                                        <img style="border-radius: 50%; width: 20px; height: 20px;" src="{{ asset('uploads/' ~ publication.idUser.image|default('images/faces/face28.jpg')) }}" alt="profile"/>  {{ publication.idUser.prenom }} {{ publication.idUser.nom }}
+                                                    </div>
+                                                    <div>
+                                                       <i class="fas fa-heart"></i> {{publication.likes|length}}
+                                                       <a href="{{ path('app_publication_comments', {'id': publication.id}) }}"><i class="fas fa-comment"></i> {{publication.commentaires|length}}</a>
+                                                    </div>
+                                                    <div class="time">
+                                                        <span>05:35 AM - 08:00 AM 2h 25'</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="primary-btn">
+                                                <a class="btn btn-primary" href="{{ path('app_publication_show', {'id': publication.id}) }}">Details</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

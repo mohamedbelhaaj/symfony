@@ -1,0 +1,37 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}RDV index{% endblock %}
+
+{% block body %}
+    <h1>RDV index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Client</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r_d_v in r_d_vs %}
+            <tr>
+                <td>{{ r_d_v.id }}</td>
+                <td>{{ r_d_v.date ? r_d_v.date|date('Y-m-d h:i A') : '' }}</td>
+                <td>{{ r_d_v.user.prenom }} {{ r_d_v.user.nom }}</td>
+                <td>
+                    <a href="{{ path('app_r_d_v_show', {'id': r_d_v.id}) }}">show</a>
+                    <a href="{{ path('app_r_d_v_edit', {'id': r_d_v.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_r_d_v_new') }}">Create new</a>
+{% endblock %}

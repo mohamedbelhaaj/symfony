@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Call us<a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+            <ul class="navbar-nav ms-auto border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('index') }}">Home</a></li>
+              <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="{{ path('offres') }}">Our offers</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('ajouter_un_bien') }}">My goods</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('services') }}">Fast services</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('about') }}">About us</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('assistance') }}">Assitance</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="{{ path('community') }}">Community</a></li>
+              {% if (app.session.get('user_role') != "Client") %}
+              <li class="nav-item px-0"><a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a></li>
+              {% endif %}
+            </ul>
+            <div class="d-flex mt-2 align-items-center mt-lg-0">
+              <div class="dropdown">
+                <button class="btn btn-sm d-flex mx-2" id="dropdownMenuButton1" type="submit" data-bs-toggle="dropdown" aria-expanded="false"><img style="border-radius: 50%; width: 30px; height: 30px;" src="{{ asset('uploads/' ~ app.session.get('user_image')|default('images/faces/face28.jpg')) }}" alt="profile"/></button>
+                <div class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end p-0 rounded" aria-labelledby="dropdownMenuButton1" style="top:55px">
+                  <p class="mb-0 ms-auto text-light fs-0 fw-normal text-center">{{app.session.get('user_name')}}</p>
+                  <a class="dropdown-item" href="{{ path('profile',{'id': app.session.get('user_id')}) }}"><i class="fas fa-user-edit text-primary" style="color: black;"></i>   My profile</a>
+                  <a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt text-danger"></i>    Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+{% endblock %}
+
+{% block body %}
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-car-insurance.png);background-position:left top;background-size:100% 85%;"></div>
+        <div class="container">
+          <div class="row align-items-center min-vh-100">
+          {# <div class="col-md-6 col-xl-6 pe-xxl-0">
+              <img src="{{ asset('assets/img/illustrations/loginbg.png') }}" style="position: relative; top: 70px;border-radius: 2rem;" alt="">
+          </div> #}
+           <div class="col-md-6 col-xl-6 pe-xxl-0">
+            <div class="card card-bg shadow hero-header-form">
+                <div class="card-body p-4 p-xl-6">
+                    <h2 class="display-2 text-light fw-thin text-center">Modification Assurance</h2>
+
+                {{ form_start(form, {'attr': {'class': 'mb-3', 'novalidate': 'novalidate'}}) }}
+
+
+
+
+                    {# <div class="form-floating mb-3">
+                       {{ form_widget(form.type, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.type, 'Prix : ') }}
+                       <div style="color: red;font-weight: bold;">
+                        {{ form_errors(form.type) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.id_vehicule, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.id_vehicule, 'Prix : ') }}
+                       <div style="color: red;font-weight: bold;">
+                        {{ form_errors(form.id_vehicule) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                       {{ form_widget(form.id_immobilier, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       {{ form_label(form.id_immobilier, 'Prix : ') }}
+                       <div style="color: red;font-weight: bold;">
+                        {{ form_errors(form.id_immobilier) }}
+                       </div>
+                    </div> #}
+
+
+
+                    <div class="form-floating mb-3">
+                    {{ form_label(form.prix, 'Prix : ') }}<br>
+                       {{ form_widget(form.prix, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                       <div style="color: red;font-weight: bold;">
+                        {{ form_errors(form.prix) }}
+                       </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                    {{ form_label(form.date_d, 'Date Début : ') }}<br>
+                       {{ form_widget(form.date_d, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                       {{ form_label(form.date_f, 'Date Fin : ') }}<br>
+                       {{ form_widget(form.date_f, {'attr': {'class': 'form-control input-box form-ensurance-header-control', 'placeholder': ' '}}) }}
+                        <div style="color: red;font-weight: bold;">
+                         {{ form_errors(form.date_f) }}
+                       </div>
+                    </div>
+
+                    <div class="col-12 d-grid">
+                        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary rounded-pill', 'type': 'submit'}}) }}
+                    </div>
+
+                {{ form_end(form) }}
+
+
+<a class="btn btn-primary btn-ensurance mt-5" href="{{ path('app_assurances') }}"><span class="fas fa-chevron-right fa-xs btn-icon"></span><span class="btn-text">Annuler</span></a>
+
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+{# <script>
+
+         document.addEventListener('DOMContentLoaded', function () {
+        var typeField = document.querySelector('#{{ form.type.vars.id }}');
+        var disabledField2 = document.querySelector('#{{ form.id_vehicule.vars.id }}');
+        var disabledField3 = document.querySelector('#{{ form.id_immobilier.vars.id }}');
+        //var form = document.querySelector('#{{ form.vars.id }}');
+
+        typeField.addEventListener('change', function () {
+            var selectedValue = typeField.value;
+            disabledField2.disabled = false;
+            disabledField3.disabled = false;
+            if (selectedValue === 'Assurance Véhicule') {
+                disabledField3.disabled = true;
+                disabledField2.disabled = false;
+            } else if (selectedValue === 'Assurance Immobilière') {
+                disabledField2.disabled = true;
+                disabledField3.disabled = false;
+            } else {
+               disabledField2.disabled = true;
+              disabledField3.disabled = true;
+            }
+        });
+    });
+    
+</script>  #}
+
+
+{% endblock %}

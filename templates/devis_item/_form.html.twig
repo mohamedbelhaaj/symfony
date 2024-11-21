@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+{% set normal_input_attr = { 'attr': { 'class': 'form-control form-control-lg', 'required': 'required'} } %}
+{{ form_start(form, {'attr': {'class': 'pt-3', 'novalidate' : 'novalidate'}}) }}
+    <div class="form-group">
+        {{ form_label(form.designation,"Désignation", {'label_attr': {'for': form.designation.vars.id}}) }}
+        {{ form_widget(form.designation,normal_input_attr|merge({'id': 'floatingDs', 'placeholder': 'Désignation'})) }}
+        {{ form_errors(form.designation) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.quantite,"Quantité", {'label_attr': {'for': form.quantite.vars.id}}) }}
+        {{ form_widget(form.quantite,normal_input_attr|merge({'id': 'floatingQn', 'placeholder': 'Quantité'})) }}
+        {{ form_errors(form.quantite) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.prix_u,"Prix unitaire", {'label_attr': {'for': form.prix_u.vars.id}}) }}
+        {{ form_widget(form.prix_u,normal_input_attr|merge({'id': 'floatingPU', 'placeholder': 'Prix unitaire'})) }}
+        {{ form_errors(form.prix_u) }}
+    </div>
+    <div class="mt-3">
+    <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" id="submit-btn" onclick="return validateForm();">{{ button_label|default("Save") }}</button>
+    </div>
+{{ form_end(form) }}

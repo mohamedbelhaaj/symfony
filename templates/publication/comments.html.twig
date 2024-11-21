@@ -1,0 +1,54 @@
+    {% extends 'service/community.html.twig' %}
+
+    {% block title %}Publication Comments{% endblock %}
+
+    {% block body %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 offset-md-3 my-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color:white;">{{ publication.titre }}</h5>
+                    <div class="d-flex justify-content-center row">
+                        <div class="d-flex flex-column col-md-12">
+                            <div class="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-4">
+                                <div class="d-flex flex-column ml-3">
+                                    <div class="d-flex flex-row post-title">
+                                        <h5>Comments ({{ publication.commentaires|length }})</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="coment-bottom bg-white p-2 px-4">
+                                <form action="{{ path('app_publication_comment', {'id': publication.id}) }}" method="post">
+                                    <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                                        <input type="text" name="commentText" class="form-control mr-3" placeholder="Add comment">
+                                        <button type="submit" class="btn btn-primary">Comment</button>
+                                    </div>
+                                </form>
+                                    {% if publication.commentaires|length > 0 %}
+                                    {% for com in publication.commentaires %}
+                                    <div class="commented-section mt-2">
+                                        <div class="d-flex flex-row align-items-center commented-user">
+                                            <h5 class="mr-2"><img style="border-radius: 50%; width: 30px; height: 30px;" src="{{ asset('uploads/' ~ com.idUser.image|default('images/faces/face28.jpg')) }}" alt="profile"/>{{ com.idUser.prenom }} {{ com.idUser.nom }}</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">2 hours ago</span>
+                                        </div>
+                                        <div class="comment-text-sm"><span>{{ com.texte }}</span></div>
+                                    </div>
+                                    {% endfor %}
+                                    {% else %}
+                                        <h6 class="mr-2">Be the first to comment.</h6>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="{{ path('app_publication_show', {'id': publication.id}) }}" class="btn btn-link">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

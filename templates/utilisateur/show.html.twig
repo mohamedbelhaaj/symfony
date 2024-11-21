@@ -1,0 +1,89 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Utilisateur Details{% endblock %}
+
+{% block body %}
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-panel">
+        <div class="content-wrapper">
+        <button type="button" class="btn btn-primary" onclick="window.location='{{ path("app_utilisateurs") }}'">◄ Back</button>
+            <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Utilisateur # {{ utilisateur.id }} | created at {{ utilisateur.dateC ? utilisateur.dateC|date('d-m-Y') : '' }}</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>Nom et Prénom</th>
+                              <th>E-mail</th>
+                              <th>Adresse</th>
+                              <th>Téléphone</th>
+                              <th>Date de naissance</th>
+                              <th>Rôle</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td scope="row">{{ utilisateur.prenom }} {{ utilisateur.nom }}</td>
+                              <td scope="row">{{ utilisateur.email }}</td>
+                              <td scope="row">{{ utilisateur.adresse }}</td>
+                              <td scope="row">{{ utilisateur.tel }}</td>
+                              <td scope="row">{{ utilisateur.dateN ? utilisateur.dateN|date('d-m-Y') : '' }}</td>
+                              <td scope="row">{{ utilisateur.role }}</td>
+                              <td scope="row">{{ utilisateur.status }}</td>
+                            </tr>
+                          </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% set normal_input_attr = { 'attr': { 'class': 'form-control p-input', 'required': 'required'} } %}
+{% for flashMessage in app.flashes('error') %}
+    <div class="alert alert-danger" id='flash-message'>{{ flashMessage }}</div>
+{% endfor %}
+{{ form_start(form, {'attr': {'class': 'forms-sample', 'novalidate': 'novalidate'}}) }}
+    <div class="form-group">
+        {{ form_label(form.nom,"Name") }}
+        {{ form_widget(form.nom,normal_input_attr) }}
+        {{ form_errors(form.nom) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.Lieu,"Location") }}
+        {{ form_widget(form.Lieu,normal_input_attr) }}
+        {{ form_errors(form.Lieu) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.tel,"Phone Number") }}
+        {{ form_widget(form.tel,normal_input_attr) }}
+        {{ form_errors(form.tel) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.specialite,"Profession") }}
+        {{ form_widget(form.specialite,normal_input_attr) }}
+        {{ form_errors(form.specialite) }}
+    </div>
+    <div class="col-12">
+    <button type="submit" class="btn btn-primary" id="submit-btn" onclick="return validateForm();">{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(form) }}
+
+
+<script>
+    // Remove flash message after 5 seconds
+    setTimeout(function() {
+        var flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            flashMessage.remove();
+        }
+    }, 5000); // 5000 milliseconds = 5 seconds
+</script>

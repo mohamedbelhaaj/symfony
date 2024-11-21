@@ -1,0 +1,212 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Assistance{% endblock %}
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="{{ path('search_reclam') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-8 offset-2 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Best post</p>
+                  <p class="font-weight-500">The total number of policies within the selected insurance categories. This represents the extent of coverage provided in specific areas such as vehicles, real estate properties, and life situations.</p>
+                  <canvas id="EnsurancesChart"
+                  data-custom-labels="{{ ['aa','aaa'] | json_encode | e('html_attr') }}"
+                  data-custom-data="{{ ['aa','aaa'] | json_encode | e('html_attr') }}"></canvas>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <script src="{{ asset('js/customChart1.js') }}"></script>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                        <p class="card-title">Réclamations</p>
+                       
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <h5 class="sr-only">Rechercher des réclamations</h5>
+                                        <div class="input-group">
+                                          <input type="text" class="form-control" id="searchInput" placeholder="Rechercher...">
+                                          <div class="input-group-append">
+                                            <button class="btn btn-sm btn-primary" type="button" id="searchButton">Rechercher</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                   
+                            <br>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Sujet</th>
+                              <th>Contenu</th>
+                              <th>E-mail</th>
+                              <th>Téléphone</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for reclamation in reclamations %}
+                            <tr>
+                              <td scope="row">{{ reclamation.id }}</td>
+                              <td scope="row">{{ reclamation.Sujet }} </td>
+                              <td scope="row">{{ reclamation.contenu }} </td>
+                              <td scope="row">{{ reclamation.user.email }}</td>
+                              <td scope="row">{{ reclamation.user.tel }}</td>
+                            
+                              <td scope="row">{{ reclamation.status }}</td>
+                              <td scope="row">
+                                <a href="{{ path('app_reclamation_show',{'id': reclamation.id}) }}"><i class="ti-eye" href=""></i></a>,
+                                <a href="{{ path('app_reponse_new',{'id': reclamation.id}) }}"><i class="ti-comment-alt" href="#"></i></a>
+                                
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                        <p class="card-title">RENDEZ VOUS</p>
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                          <h5 class="sr-only">Rechercher des RENDEZ VOUS  </h5>
+                                          <div class="input-group">
+                                            <input type="text" class="form-control" id="searchInput" placeholder="Rechercher...">
+                                            <div class="input-group-append">
+                                              <button class="btn btn-sm btn-primary" type="button" id="searchButton">Rechercher</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                            <br>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="display expandable-table" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Date</th>
+                              <th>Client</th>
+                              <th>Status</th>
+                              <th>Actions</th>           
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for r_d_v in r_d_vs %}
+                            <tr>
+                              <td>{{ r_d_v.id }}</td>
+                              <td>{{ r_d_v.date ? r_d_v.date|date('Y-m-d h:i ') : '' }}</td>
+                              <td>{{ r_d_v.user.prenom }} {{ r_d_v.user.nom }}</td>
+                              <td>{{ r_d_v.status }}</td>
+                              <td>
+                                <a href="{{ path('app_r_d_v_show', {'id': r_d_v.id}) }}"><i class="ti-eye" href=""></i></a>
+                                <a href="{{ path('app_r_d_v_edit', {'id': r_d_v.id}) }}"><i class="ti-pencil" href=""></i></a>
+                                <a href="{{ path('app_r_d_v_confirm', {'id': r_d_v.id}) }}"><i class="ti-check" href=""></i></a>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        
+        {% endblock %}

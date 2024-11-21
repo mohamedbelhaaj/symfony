@@ -1,0 +1,116 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Evaluation{% endblock %}
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('expert') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+         
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+          <a class="btn btn-primary" href="{{ path('app_evaluation') }}"><i class="ti-arrow-left" href=""></i>Retour</a>
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  {% if veh is not null %}
+                    <p class="card-title">Véhicule {{ veh.matricule }}</p>
+                  {% elseif imm is not null %}
+                    <p class="card-title">Immobilier {{ imm.idFiscal }}</p>
+                  {% endif %}
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                      {% if veh is not null %}
+                      {% if veh.evaluation %}
+                        <table class="display expandable-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>Valeur neuf</th>
+                                    <th>Valeur venal</th>
+                                    <th>Observation</th>
+                                    <th>Faite par</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ veh.evaluation.id }}</td>
+                                    <td>{{ veh.evaluation.date ? veh.evaluation.date|date('Y-m-d') : ''  }}</td>
+                                    <td>{{ veh.evaluation.valeurneuf }} TND</td>
+                                    <td>{{ veh.evaluation.valeurvenal }} TND</td>
+                                    <td>{{ veh.evaluation.Observation }}</td>
+                                    <td>{{ veh.evaluation.idExpert.prenom }} {{ veh.evaluation.idExpert.nom }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      {% else %}
+                        <p>No result found</p>
+                      {% endif %}
+                      {% endif %}
+                      {% if imm is not null %}
+                      {% if imm.evaluation %}
+                        <table class="display expandable-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>Valeur neuf</th>
+                                    <th>Valeur venal</th>
+                                    <th>Observation</th>
+                                    <th>Faite par</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ imm.evaluation.id }}</td>
+                                    <td>{{ imm.evaluation.date ? imm.evaluation.date|date('Y-m-d') : '' }}</td>
+                                    <td>{{ imm.evaluation.valeurneuf }} TND</td>
+                                    <td>{{ imm.evaluation.valeurvenal }} TND</td>
+                                    <td>{{ imm.evaluation.Observation }}</td>
+                                    <td>{{ imm.evaluation.idExpert.prenom }} {{ imm.evaluation.idExpert.nom }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      {% else %}
+                        <p>No result found</p>
+                      {% endif %}
+                      {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+{% endblock %}

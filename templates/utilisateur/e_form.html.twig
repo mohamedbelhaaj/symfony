@@ -1,0 +1,67 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+{% set normal_input_attr = { 'attr': { 'class': 'form-control p-input', 'required': 'required'} } %}
+{% for flashMessage in app.flashes('error') %}
+    <div class="alert alert-danger" id='flash-message'>{{ flashMessage }}</div>
+{% endfor %}
+{{ form_start(form, {'attr': {'class': 'forms-sample', 'novalidate': 'novalidate'}}) }}
+    <div class="form-group">
+        {{ form_label(form.nom,"Nom") }}
+        {{ form_widget(form.nom,normal_input_attr) }}
+        {{ form_errors(form.nom) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.prenom,"Prénom") }}
+        {{ form_widget(form.prenom,normal_input_attr) }}
+        {{ form_errors(form.prenom) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.email,"E-mail") }}
+        {{ form_widget(form.email,normal_input_attr) }}
+        {{ form_errors(form.email) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.adresse,"Adresse") }}
+        {{ form_widget(form.adresse,normal_input_attr) }}
+        {{ form_errors(form.adresse) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.tel,"Télephone") }}
+        {{ form_widget(form.tel,normal_input_attr) }}
+        {{ form_errors(form.tel) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.date_n,"Date de naissance") }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.date_n, {'attr': {'id' :'floatingEdDateN','class': 'datepicker', 'data-date-format': 'dd-mm-yyyy'}}) }}
+        {{ form_errors(form.date_n) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.role,"Rôle") }}
+        {{ form_widget(form.role,normal_input_attr) }}
+        {{ form_errors(form.role) }}
+    </div>
+    <div class="col-12">
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(form) }}
+
+{% block script %}
+<script>
+    // Remove flash message after 5 seconds
+    setTimeout(function() {
+        var flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            flashMessage.remove();
+        }
+    }, 5000); // 5000 milliseconds = 5 seconds
+    $(document).ready(function(){
+        $('.datepicker').datepicker({
+            dateFormat: "dd-mm-yyyy", // Define the date format
+            autoclose: true, // Close the datepicker when a date is selected
+            todayHighlight: true // Highlight today's date
+        });
+    });
+</script>
+{% endblock %}

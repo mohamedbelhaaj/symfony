@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><img src="{{ asset('assets/img/icons/logoWM.png') }}" alt=""><a class="navbar-brand" href="{{ path('index') }}"><span class="text-primary fs-3 ms-2 fw-bolder">ss</span><span class="fw-thin text-300 fs-3">urancy.tn</span></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse pt-4 pt-lg-0" id="navbarSupportedContent">
+            <p class="mb-0 ms-auto text-light fs-0 fw-normal"><i class="fas fa-phone-alt me-2"></i>Call us  <a class="text-light" href="tel:+216 92440011">+216 92440011</a></p>
+          </div>
+        </div>
+      </nav>
+{% endblock %}
+
+{% block body %}
+        <div class="bg-holder d-none d-md-block" style="background-image:url(assets/img/illustrations/bg-car-insurance.png);background-position:left top;background-size:100% 85%;"></div>
+        <div class="container">
+          <div class="row align-items-center min-vh-100">
+          <div class="col-md-6 col-xl-6 pe-xxl-0">
+              <img src="{{ asset('assets/img/illustrations/loginbg.png') }}" style="position: relative; top: 70px;border-radius: 2rem;" alt="">
+          </div>
+           <div class="col-md-6 col-xl-6 pe-xxl-0">
+            <div class="card card-bg shadow hero-header-form">
+                <div class="card-body p-4 p-xl-6">
+                    <h1 class="display-2 text-light fw-thin text-center">Sign in</h1>
+                    <form class="mb-3" method="post">
+                      {% if error %}
+                        <div class="alert alert-danger">* {{ error }}</div>
+                      {% endif %}
+                      {% for flash_message in app.session.flashbag.get('success') %}
+                        <div class="alert alert-success">
+                          * {{ flash_message }}
+                        </div>
+                      {% endfor %}
+                      {% for flash_message in app.session.flashbag.get('error') %}
+                        <div class="alert alert-danger">
+                          * {{ flash_message }}
+                        </div>
+                      {% endfor %}
+                      <div class="form-floating mb-3">
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control input-box form-ensurance-header-control" autocomplete="email" autofocus>
+                        <label for="inputEmail">E-mail</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input type="password" name="password" id="inputPassword" class="form-control input-box form-ensurance-header-control" autocomplete="current-password" >
+                        <label for="inputPassword">Password</label>
+                      </div>
+                      <span class="toggle-password" id="eye-icon">
+                          <i class="fas fa-eye" onclick="togglePasswordVisibility()"></i>  Show password
+                        </span>
+                      <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                      <div class="col-12 d-grid">
+                        <p class="text-400 mt-3 text-center">Forget password ? <a href="{{ path('reset_Request') }}">Click here</a></p>
+                        <button type="submit" class="btn btn-primary rounded-pill">Sign in</button>
+                        <p class="text-400 mt-3 text-center">If you don't have an account  <a href="{{ path('inscription') }}">Click here</a></p>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <script>
+    // Remove flash message after 5 seconds
+    setTimeout(function() {
+        var flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            flashMessage.remove();
+        }
+    }, 5000); // 5000 milliseconds = 5 seconds
+</script>
+<script>
+    function togglePasswordVisibility() {
+    const passwordInput = document.getElementById("inputPassword");
+    const passwordIcon = document.getElementById("eye-icon");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        passwordIcon.style.color = "#ffffff"; // Change icon color when password is visible
+        passwordIcon.innerHTML = '<i class="fas fa-eye" onclick="togglePasswordVisibility()"></i>  Mask password';
+    } else {
+        passwordInput.type = "password";
+        passwordIcon.style.color = "#656060"; // Reset icon color
+        passwordIcon.innerHTML = '<i class="fas fa-eye" onclick="togglePasswordVisibility()"></i>  Show password';
+    }
+    }
+    </script>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'basedash.html.twig' %}
+
+{% block title %}Assurancy.tn | Constat{% endblock %}
+{% block body %}
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if (app.session.get('user_role') == "Admin") %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_utilisateurs') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assurances') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assurances</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_community') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Communauté</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_assistance') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Assistance</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Agent SOS")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_sos') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">SOS</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if ((app.session.get('user_role') == "Admin") or (app.session.get('user_role') == "Expert")) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('constat') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Constat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('devis_expert') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Devis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_evaluation') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Evaluation</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-8 offset-2 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">Accident report Status</p>
+                  <canvas id="CVChart"
+                  data-custom-labels="{{ LabelsC | json_encode | e('html_attr') }}"
+                  data-custom-data="{{ DataC | json_encode | e('html_attr') }}"></canvas>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <script src="{{ asset('js/customChartCV.js') }}"></script>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">List of Constats</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                      {% if constats is not empty %}
+                        <table class="display expandable-table" style="width:100%">
+                            <thead>
+            <tr>
+               <th>ID Constat</th>
+                <th>Date Constat</th>
+                <th>Propriétaire de constat</th>
+                <th>Status</th>
+                <th>Action</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for c in constats %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.dateConstat | date('Y-m-d') }}</td>
+                <td>{{ user.prenom }} {{ user.nom }}</td>
+                <td>{{ c.status }} </td>
+                <td scope="row">
+                <a href="{{ path('affichage_details_constat', { 'id' : c.id }) }}"><i class="ti-eye" href="#"></i></a>     
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+                      </table>
+                      {% else %}
+        <p>No results found</p>
+        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endblock %}

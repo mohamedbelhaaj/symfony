@@ -1,0 +1,37 @@
+
+
+<div>
+
+        <div class="container">
+        {{form_start(form,{'attr':{'class' : 'mb-3','novalidate':'novalidate'}})}}
+
+        <div class="form-floating mb-3">
+            {{ form_widget(form.Sujet,{ 'attr': {'class': 'form-control input-box form-ensurance-header-control', 'id' : 'floatingSJ'} }) }} 
+            {{ form_label(form.Sujet,"Votre sujet",{ 'attr': {'for' : 'floatingSJ'} }) }}
+           
+            {% if form_errors(form.Sujet) is not empty %}
+                <div class="alert alert-danger" >
+                    {{ form_errors(form.Sujet) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+           {{ form_widget(form.contenu,{ 'attr': {'class': 'form-control input-box form-ensurance-header-control', 'id' : 'floatingC'} }) }} 
+            {{ form_label(form.contenu,"Votre contenu",{ 'attr': {'for' : 'floatingC'} }) }}
+           {% if form_errors(form.contenu) is not empty %}
+                <div class="alert alert-danger" >
+                    {{ form_errors(form.contenu) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-12 d-grid">
+            <button class="btn btn-primary rounded-pill" >{{ button_label|default('Save') }}</button>
+        </div>
+{{ form_end(form) }}
+
+
+        
+</div>
+</div>
+
+

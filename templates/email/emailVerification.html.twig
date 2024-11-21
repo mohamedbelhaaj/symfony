@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Assurancy.tn</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        h1 {
+            background-color: #086c0c;
+            color: #ffffff;
+            padding: 30px 0 30px 0;
+            font-weight: normal;
+        }
+        hr {
+            border: none;
+            border-top: 3px solid #086c0c;
+            margin: 20px;
+        }
+        .container {
+            background-color: #fefefe;
+            width: 580px;
+            margin: 0 auto;
+        }
+        .bottom {
+            background-color: #efefee;
+        }
+        .block {
+            margin: 0;
+            padding: 10px 20px 20px 20px;
+        }
+        .logo {
+            width: 50%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #086c0c;
+            color: #fefefe;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="container">
+        <div class="header text-center">
+            <a href="">
+                <img src="https://i.imgur.com/MaLlwBR.png" class="logo" alt="SpaceBar Logo">
+            </a>
+        </div>
+        <div class="content">
+            <h1 class="text-center">Verification E-mail</h1>
+            <p class="block">Hi , {{ Username }}</p>
+            <p class="block">
+                We, the Assurancy.tn team, are reaching out to you via email in order to facilitate the verification process for your account. Ensuring the security and authenticity of our users is of utmost importance to us, and completing this verification step will help us in providing you with a seamless and secure experience on our platform. Your cooperation in this matter is greatly appreciated, and should you have any questions or concerns, please do not hesitate to contact our support team. Thank you for choosing Assurancy.tn!
+            </p>
+            <p class="block text-center">
+                <a href='{{ VerificationUrl }}' class="btn">Verify now!</a>
+            </p>
+            <p class='block text-center'>
+                Link expires after 1 day !
+            </p>
+        <div class="footer">
+            <p class='block'>
+                Best Regards,<br><br>
+                The <em>Assurancy.tn</em> Team
+            </p>
+            <p class="block bottom text-center">
+                Contact us : +216 92440011
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
